@@ -15,7 +15,8 @@ public class UI_GameScene : UI_Scene
     }
     public enum Buttons
     {
-        Run
+        Run,
+        Setting
     }
     RectTransform m_rectBack;
     RectTransform m_rectJoystick;
@@ -44,6 +45,7 @@ public class UI_GameScene : UI_Scene
         joyStick = GetImage((int)Images.JoyStick);
         m_rectJoystick = joyStick.transform.GetComponent<RectTransform>();
         GetButton((int)Buttons.Run).gameObject.AddUIEvent(Run);
+        GetButton((int)Buttons.Setting).gameObject.AddUIEvent(SettingClick);
         character = FindObjectOfType<CharacterController>().gameObject;
         characterController = character.GetComponent<CharacterController>();
         joyStick.gameObject.AddUIEvent(OnBeginDrag, Define.UIEvent.BeginDrag);
@@ -88,6 +90,10 @@ public class UI_GameScene : UI_Scene
     {
         input = Vector2.zero;
         m_rectJoystick.anchoredPosition = Vector2.zero;
+    }
+    void SettingClick(PointerEventData eventData)
+    {
+        Managers.UI.ShowPopUpUI<UI_Setting>();
     }
     void Update()
     {
