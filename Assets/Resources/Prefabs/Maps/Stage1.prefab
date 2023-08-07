@@ -251,7 +251,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!1 &7133414511308060876
 GameObject:
@@ -424,7 +424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5727388450890487511, guid: aa7ebef2e09a75946a9a49ba75f9dfad, type: 3}
       propertyPath: m_MaskInteraction
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6449221733687553119, guid: aa7ebef2e09a75946a9a49ba75f9dfad, type: 3}
       propertyPath: m_Name
@@ -446,7 +446,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4720300300589535350, guid: 76dd7efe120a3a244ae1feeeea8fe144, type: 3}
       propertyPath: m_MaskInteraction
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7453026046033762220, guid: 76dd7efe120a3a244ae1feeeea8fe144, type: 3}
       propertyPath: m_RootOrder
