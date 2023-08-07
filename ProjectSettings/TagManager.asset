@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Light
   - Stairs
+  - Item0
+  - Item1
   layers:
   - Default
   - TransparentFX

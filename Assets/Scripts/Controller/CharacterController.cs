@@ -7,6 +7,8 @@ public class CharacterController : BaseController
 {
     [SerializeField] public float speed;
     [SerializeField] UI_GameScene gameScene;
+    [SerializeField] float time = 3f;
+    [SerializeField] int life = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,7 @@ public class CharacterController : BaseController
     {
         WorldObjectType = Define.WorldObject.Player;
         gameScene = GameObject.FindObjectOfType<UI_GameScene>();
+        life = 3;
     }
     protected override void UpdateIdle()
     {
@@ -33,7 +36,10 @@ public class CharacterController : BaseController
     // Update is called once per frame
     void Update()
     {
-        
+        if (life <= 0)
+        {
+            Debug.Log("Die");
+        }
     }
     private void FixedUpdate()
     {
@@ -58,5 +64,30 @@ public class CharacterController : BaseController
         transform.position += upmovement;
         transform.position += rightmovement;
     }
-
+    IEnumerator ReturnSpeed()
+    {
+        yield return new WaitForSeconds(time);
+        speed = 5;
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Item0")
+        {
+            speed = 10;
+            StartCoroutine(ReturnSpeed());
+        }
+        if(other.gameObject.tag == "Item1")
+        {
+            speed = 2;
+            StartCoroutine(ReturnSpeed());
+        }
+        if(other.gameObject.tag == "Laser")
+        {
+            life--;
+        }
+        if(other.gameObject.tag == "Light")
+        {
+            life = 0;
+        }
+    }
 }
