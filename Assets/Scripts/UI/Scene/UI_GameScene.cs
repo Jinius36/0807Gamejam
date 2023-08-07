@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,12 +22,19 @@ public class UI_GameScene : UI_Scene
     Image joyStick;
     [SerializeField] GameObject character;
     float m_fRadius;
-    float m_fSpeed = 5.0f;
-    float m_fsqr = 0f;
     bool m_bTouch = false;
+    float m_fSpeed = 5.0f;
+    float m_fSqr = 0f;
     Vector3 m_vecMove;
-
+    [SerializeField, Range(10f, 150f)]
+    private float leverRange;   // 추가
     Vector2 m_vecNormal;
+    float deadZone = 0f;
+    float handlerRange = 1;
+    Vector3 input = Vector3.zero;
+    Canvas canvas;
+    public float Horizontal { get { return input.x; } }
+    public float Vertical { get { return input.y; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -37,32 +45,66 @@ public class UI_GameScene : UI_Scene
         base.Init();
         Bind<Image>(typeof(Images));
         Bind<Button>(typeof(Buttons));
-        m_rectBack = GetImage((int)Images.JoyStickBack).gameObject.GetComponent<RectTransform>();
+        m_rectBack = GetImage((int)Images.JoyStickBack).transform.GetComponent<RectTransform>();
         joyStick = GetImage((int)Images.JoyStick);
-        m_rectJoystick = joyStick.gameObject.GetComponent<RectTransform>();
-        GetButton((int)Buttons.Run).gameObject.AddUIEvent(Run);
+        m_rectJoystick = joyStick.transform.GetComponent<RectTransform>();
+        //GetButton((int)Buttons.Run).gameObject.AddUIEvent(Run);
         character = FindObjectOfType<CharacterController>().gameObject;
-        joyStick.gameObject.AddUIEvent(OnDrag, Define.UIEvent.Drag);
         joyStick.gameObject.AddUIEvent(OnPointerDown, Define.UIEvent.BeginDrag);
+        joyStick.gameObject.AddUIEvent(OnDrag, Define.UIEvent.Drag);
         joyStick.gameObject.AddUIEvent(OnPointerUp, Define.UIEvent.DragEnd);
-
+        m_fRadius = m_rectBack.rect.width * 0.5f;
+        canvas = this.GetComponent<Canvas>();
     }
-    void OnTouch(Vector2 vecTouch)
+    //void OnBeginDrag(PointerEventData eventData)
+    //{
+    //    Vector2 radius = m_rectBack.sizeDelta;
+    //    input = (eventData.position - m_rectBack.anchoredPosition) / (m_fRadius * canvas.scaleFactor);
+    //    HandleInput(input.magnitude, input.normalized);
+    //    m_rectJoystick.anchoredPosition = input * m_fRadius * handlerRange;
+    //}
+    //void OnDrag(PointerEventData eventData)
+    //{
+    //    Vector2 radius = m_rectBack.sizeDelta;
+    //    input = (eventData.position - m_rectBack.anchoredPosition) / (m_fRadius * canvas.scaleFactor);
+    //    HandleInput(input.magnitude, input.normalized);
+    //    m_rectJoystick.anchoredPosition = input * m_fRadius * handlerRange;
+    //}
+    //void HandleInput(float magnitude, Vector2 normalized)
+    //{
+    //    if (magnitude > deadZone)
+    //    {
+    //        if (magnitude > 1)
+    //        {
+    //            input = normalized;
+    //        }
+    //        else
+    //        {
+    //            input = Vector2.zero;
+    //        }
+    //    }
+    //}
+    //void OnPointerUP(PointerEventData eventData)
+    //{
+    //    input = Vector2.zero;
+    //    m_rectJoystick.anchoredPosition = Vector2.zero;
+    //}
+    void OnTouch(Vector3 vecTouch)
     {
-        Vector2 vec = new Vector2(vecTouch.x - m_rectBack.position.x, vecTouch.y - m_rectBack.position.y);
+        Vector3 vec = new Vector3(vecTouch.x - m_rectBack.position.x, vecTouch.y - m_rectBack.position.y, 0f);
 
         // vec값을 m_fRadius 이상이 되지 않도록 합니다.
-        vec = Vector2.ClampMagnitude(vec, m_fRadius);
+        vec = Vector3.ClampMagnitude(vec, m_fRadius);
         m_rectJoystick.localPosition = vec;
 
         // 조이스틱 배경과 조이스틱과의 거리 비율로 이동합니다.
         float fSqr = (m_rectBack.position - m_rectJoystick.position).sqrMagnitude / (m_fRadius * m_fRadius);
 
         // 터치위치 정규화
-        Vector2 vecNormal = vec.normalized;
+        Vector3 vecNormal = vec.normalized;
 
-        m_vecMove = new Vector3(vecNormal.x * m_fSpeed * Time.deltaTime * fSqr, 0f, vecNormal.y * m_fSpeed * Time.deltaTime * fSqr);
-        character.transform.eulerAngles = new Vector3(0f, Mathf.Atan2(vecNormal.x, vecNormal.y) * Mathf.Rad2Deg, 0f);
+        m_vecMove = new Vector3(vecNormal.x * m_fSpeed * Time.deltaTime * fSqr, vecNormal.y * m_fSpeed * Time.deltaTime * fSqr, 0f);
+        character.transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(vecNormal.x, vecNormal.y) * Mathf.Rad2Deg);
     }
     public void Run(PointerEventData eventData)
     {
@@ -77,14 +119,13 @@ public class UI_GameScene : UI_Scene
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        OnTouch(eventData.position);
         m_bTouch = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         // 원래 위치로 되돌립니다.
-        m_rectJoystick.localPosition = Vector2.zero;
+        m_rectJoystick.localPosition = Vector3.zero;
         m_bTouch = false;
     }
     // Update is called once per frame
@@ -94,5 +135,6 @@ public class UI_GameScene : UI_Scene
         {
             character.transform.position += m_vecMove;
         }
+
     }
 }
