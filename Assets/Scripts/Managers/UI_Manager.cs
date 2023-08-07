@@ -39,7 +39,7 @@ public class UI_Manager
         }
         else
         {
-            canvas.sortingOrder = 0;
+            canvas.sortingOrder = 5;
         }
     }
     public T ShowAnyUI<T>(string name = null) where T : UI_Base

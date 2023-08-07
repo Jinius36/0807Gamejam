@@ -74,11 +74,13 @@ public class CharacterController : BaseController
         if(other.gameObject.tag == "Item0")
         {
             speed = 10;
+            Managers.Resource.Destroy(other.gameObject);
             StartCoroutine(ReturnSpeed());
         }
         if(other.gameObject.tag == "Item1")
         {
             speed = 2;
+            Managers.Resource.Destroy(other.gameObject);
             StartCoroutine(ReturnSpeed());
         }
         if(other.gameObject.tag == "Laser")
