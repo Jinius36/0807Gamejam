@@ -137,7 +137,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 768eb3f323e93e5479407fd98dd556da, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f68e48e0972183840aaec22df54e792a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -146,7 +146,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &657148243951208120
 PrefabInstance:
@@ -157,7 +157,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3778846641763986920, guid: 060faf754a49693449debf2eb36ea0ae, type: 3}
       propertyPath: m_MaskInteraction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3778846641763986921, guid: 060faf754a49693449debf2eb36ea0ae, type: 3}
       propertyPath: m_RootOrder
@@ -291,7 +291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8272888596382641444, guid: db4e2bc67aab00749a48fb527c184741, type: 3}
       propertyPath: m_MaskInteraction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8676122950621367134, guid: db4e2bc67aab00749a48fb527c184741, type: 3}
       propertyPath: m_Name
@@ -321,7 +321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3159305227481378671, guid: a39fb658ddb974a41b234229dbee04a2, type: 3}
       propertyPath: m_MaskInteraction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4548468184958940782, guid: a39fb658ddb974a41b234229dbee04a2, type: 3}
       propertyPath: m_RootOrder
@@ -399,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2961779139904808859, guid: 32d295aa34615a8439548cbe84e44d7f, type: 3}
       propertyPath: m_MaskInteraction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8046293253342073389, guid: 32d295aa34615a8439548cbe84e44d7f, type: 3}
       propertyPath: m_Name
@@ -521,7 +521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7907346378516404257, guid: ef240873bde4cc14185eb31aea714984, type: 3}
       propertyPath: m_MaskInteraction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7907346378516404258, guid: ef240873bde4cc14185eb31aea714984, type: 3}
       propertyPath: m_Name
