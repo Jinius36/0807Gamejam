@@ -109,6 +109,7 @@ public class UI_GameScene : UI_Scene
     void SettingClick(PointerEventData eventData)
     {
         Managers.UI.ShowPopUpUI<UI_Setting>();
+        Time.timeScale = 0;
     }
     void Update()
     {
