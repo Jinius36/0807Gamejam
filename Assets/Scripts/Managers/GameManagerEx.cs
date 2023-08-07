@@ -15,7 +15,7 @@ public class GameManagerEx
 
         switch (type)
         {
-            case Define.WorldObject.Monster:
+            case Define.WorldObject.Enemy:
                 _monsters.Add(go);
                 if (OnSpawnEvent != null)
                     OnSpawnEvent.Invoke(1);
@@ -42,7 +42,7 @@ public class GameManagerEx
 
         switch (type)
         {
-            case Define.WorldObject.Monster:
+            case Define.WorldObject.Enemy:
                 {
                     if (_monsters.Contains(go))
                     {

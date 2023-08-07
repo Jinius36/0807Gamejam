@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterController : BaseController
 {
-    [SerializeField] float speed;
+    [SerializeField] public float speed;
     [SerializeField] UI_GameScene gameScene;
     // Start is called before the first frame update
     void Start()
@@ -41,9 +41,18 @@ public class CharacterController : BaseController
         {
             MoveControl();
         }
+
     }
     private void MoveControl()
     {
+        if(gameScene.Horizontal > 0)
+        {
+            transform.localEulerAngles = new Vector3(0, 0, -90);
+        }
+        else if(gameScene.Horizontal < 0)
+        {
+            transform.localEulerAngles = new Vector3(0, 0, 90);
+        }
         Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
         Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
         transform.position += upmovement;
