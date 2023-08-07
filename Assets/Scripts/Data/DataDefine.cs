@@ -14,5 +14,19 @@ public class DataDefine
             _currentStage = 1;
         }
     }
+    [System.Serializable]
+    public class Item
+    {
+        public List<ItemData> itemData;
+    }
+    [System.Serializable]
+    public class ItemData
+    {
+        public bool isGet;
+        public ItemData()
+        {
+            isGet = false;
+        }
+    }
 
 }

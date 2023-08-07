@@ -26,7 +26,7 @@ public class UI_StartScene : UI_Scene
     // Update is called once per frame
     public void StartClick(PointerEventData data)
     {
-        Managers.Scene.LoadScene(Define.Scene.GameScene);
+        Managers.Scene.LoadScene(Define.Scene.GameScene1);
     }
     public void SettingClick(PointerEventData data)
     {

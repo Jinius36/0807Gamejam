@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameScene : BaseScene
+public class GameScene2: BaseScene
 {
     [SerializeField] Vector3 characterSpawn = Vector3.zero;
     [SerializeField] List<Vector3> EnemySpawnList;   
@@ -10,7 +10,7 @@ public class GameScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        SceneType = Define.Scene.GameScene;
+        SceneType = Define.Scene.GameScene2;
         Managers.UI.ShowSceneUI<UI_GameScene>();
 //        Managers.Resource.Instantiate("Character").transform.position = characterSpawn;
         // switch (DataManager.singleTon.saveData._currentStage)

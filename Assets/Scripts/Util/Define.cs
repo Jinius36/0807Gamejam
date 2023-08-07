@@ -34,7 +34,9 @@ public class Define
     {
         Unknown,
         StartScene,
-        GameScene
+        GameScene1,
+        GameScene2,
+        GameScene3
     }
     public enum Sound
     {

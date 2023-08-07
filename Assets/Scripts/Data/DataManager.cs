@@ -8,6 +8,7 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager singleTon;
     public SaveData saveData;
+    public Item item;
     public JsonManager jsonManager;
     public GameObject _gameObject;
     // Start is called before the first frame update
@@ -16,7 +17,8 @@ public class DataManager : MonoBehaviour
     public void Awake()
     {
         jsonManager = new JsonManager();
-        saveData = new SaveData();
+        saveData = jsonManager.Load<SaveData>();
+        item = jsonManager.Load<Item>();
         if (singleTon == null)
         {
             singleTon = this;

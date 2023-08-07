@@ -8,6 +8,7 @@ TagManager:
   - Stairs
   - Item0
   - Item1
+  - Clue
   layers:
   - Default
   - TransparentFX
