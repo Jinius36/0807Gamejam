@@ -21,10 +21,11 @@ public class CharacterController : BaseController
         Paper2_1,
         Paper2_2,
     }
-    [SerializeField] public float speed;
+    [SerializeField] public float speed = 10;
     [SerializeField] UI_GameScene gameScene;
     [SerializeField] float time = 3f;
     [SerializeField] int life = 3;
+    [SerializeField] Rigidbody2D rigidbody;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +36,7 @@ public class CharacterController : BaseController
         WorldObjectType = Define.WorldObject.Player;
         gameScene = GameObject.FindObjectOfType<UI_GameScene>();
         life = 3;
+        rigidbody = GetComponent<Rigidbody2D>();
     }
     protected override void UpdateIdle()
     {
@@ -77,7 +79,6 @@ public class CharacterController : BaseController
         {
             MoveControl();
         }
-
     }
     private void MoveControl()
     {
@@ -89,10 +90,12 @@ public class CharacterController : BaseController
         {
             transform.localEulerAngles = new Vector3(0, 0, 90);
         }
-        Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
-        Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
-        transform.position += upmovement;
-        transform.position += rightmovement;
+        //Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
+        //Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
+        Vector2 vector = new Vector2(speed * gameScene.Vertical, speed * gameScene.Horizontal);
+        //transform.position += upmovement;
+        //transform.position += rightmovement;
+        rigidbody.velocity = vector;
     }
     IEnumerator ReturnSpeed()
     {
