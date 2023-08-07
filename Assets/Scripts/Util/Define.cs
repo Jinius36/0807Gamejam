@@ -33,7 +33,8 @@ public class Define
     public enum Scene
     {
         Unknown,
-        MainScene
+        StartScene,
+        GameScene
     }
     public enum Sound
     {

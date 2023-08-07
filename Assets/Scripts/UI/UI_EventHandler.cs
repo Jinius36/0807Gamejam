@@ -8,31 +8,31 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 {
     public Action<PointerEventData> OnClickHandler = null;
     public Action<PointerEventData> SliderHandler = null;
-    public Action<PointerEventData> JoyStickBeginHandler = null;
-    public Action<PointerEventData> JoyStickDragHandler = null;
-    public Action<PointerEventData> JoyStickEndHandler = null;
+    public Action<PointerEventData> BeginDragHandler = null;
+    public Action<PointerEventData> DragHandler = null;
+    public Action<PointerEventData> DragEndHandler = null;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (JoyStickBeginHandler != null)
+        if (BeginDragHandler != null)
         {
-            JoyStickBeginHandler.Invoke(eventData);
+            BeginDragHandler.Invoke(eventData);
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (JoyStickDragHandler != null)
+        if (DragHandler != null)
         {
-            JoyStickDragHandler.Invoke(eventData);
+            DragHandler.Invoke(eventData);
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (JoyStickEndHandler != null)
+        if (DragEndHandler != null)
         {
-            JoyStickEndHandler.Invoke(eventData);
+            DragEndHandler.Invoke(eventData);
         }
     }
 
