@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class Define
 {
+    public enum WorldObject
+    {
+        Unknown,
+        Player,
+        Monster,
+    }
+    public enum State
+    {
+        Idle,
+        Walk,
+        Run
+    }
     public enum UIEvent
     {
         Click,
@@ -21,9 +33,7 @@ public class Define
     public enum Scene
     {
         Unknown,
-        MainScene,
-        GameScene,
-        StageSelect
+        MainScene
     }
     public enum Sound
     {
