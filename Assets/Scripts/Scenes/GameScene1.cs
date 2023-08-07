@@ -13,18 +13,7 @@ public class GameScene1 : BaseScene
         SceneType = Define.Scene.GameScene1;
         Managers.UI.ShowSceneUI<UI_GameScene>();
         Managers.Resource.Instantiate("Character").transform.position = characterSpawn;
-        switch (DataManager.singleTon.saveData._currentStage)
-        {
-            case 1:
-                Managers.Resource.Instantiate("Maps/stage1");
-                break;
-            case 2:
-                Managers.Resource.Instantiate("Maps/stage2");
-                break;
-            case 3:
-                Managers.Resource.Instantiate("Maps/stage3");
-                break;
-        }
+        Managers.Resource.Instantiate("Maps/stage1");
         Managers.Resource.Instantiate("Enemy");
     }
 

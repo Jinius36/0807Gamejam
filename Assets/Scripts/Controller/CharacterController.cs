@@ -12,13 +12,16 @@ public class CharacterController : BaseController
         Cctv1,
         Cctv2,
         Cctv3,
-        Key,
+        Key1,
+        Key2,
         Pen,
         Picture1,
         Picture2,
         USB,
-        Paper1,
-        Paper2,
+        Paper1_1,
+        Paper1_2,
+        Paper2_1,
+        Paper2_2,
         Sausage,
         Milk
     }
@@ -152,8 +155,11 @@ public class CharacterController : BaseController
                 case "Cctv3":
                     DataManager.singleTon.item.itemData[(int)Items.Cctv3].isGet = true;
                     break;
-                case "Key":
-                    DataManager.singleTon.item.itemData[(int)Items.Key].isGet = true;
+                case "Key1":
+                    DataManager.singleTon.item.itemData[(int)Items.Key1].isGet = true;
+                    break;
+                case "Key2":
+                    DataManager.singleTon.item.itemData[(int)Items.Key2].isGet = true;
                     break;
                 case "Pen":
                     DataManager.singleTon.item.itemData[(int)Items.Pen].isGet = true;
@@ -167,17 +173,17 @@ public class CharacterController : BaseController
                 case "USB":
                     DataManager.singleTon.item.itemData[(int)Items.USB].isGet = true;
                     break;
-                case "Paper1":
-                    DataManager.singleTon.item.itemData[(int)Items.Paper1].isGet = true;
+                case "Paper1_1":
+                    DataManager.singleTon.item.itemData[(int)Items.Paper1_1].isGet = true;
                     break;
-                case "Paper2":
-                    DataManager.singleTon.item.itemData[(int)Items.Paper2].isGet = true;
+                case "Paper1_2":
+                    DataManager.singleTon.item.itemData[(int)Items.Paper1_2].isGet = true;
                     break;
-                case "Sausage":
-                    DataManager.singleTon.item.itemData[(int)Items.Sausage].isGet = true;
+                case "Paper2_1":
+                    DataManager.singleTon.item.itemData[(int)Items.Paper2_1].isGet = true;
                     break;
-                case "Milk":
-                    DataManager.singleTon.item.itemData[(int)Items.Milk].isGet = true;
+                case "Paper2_2":
+                    DataManager.singleTon.item.itemData[(int)Items.Paper2_2].isGet = true;
                     break;
             }
             Managers.Resource.Destroy(other.gameObject);
