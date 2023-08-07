@@ -10,7 +10,7 @@ public class Managers : MonoBehaviour
     UI_Manager _ui = new UI_Manager();
     ResourceManager _resource = new ResourceManager();
     SceneManagerEx _scene = new SceneManagerEx();
-    InputManager _input = new InputManager();
+    //InputManager _input = new InputManager();
     SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
     GameManagerEx _game = new GameManagerEx();
@@ -19,7 +19,7 @@ public class Managers : MonoBehaviour
     public static UI_Manager UI { get { return Instance._ui; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
-    public static InputManager Input { get { return Instance._input; } }
+    //public static InputManager Input { get { return Instance._input; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
 
@@ -30,7 +30,7 @@ public class Managers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _input.OnUpdate();
+        //_input.OnUpdate();
     }
     static void Init()
     {
@@ -48,7 +48,7 @@ public class Managers : MonoBehaviour
     }
     public static void Clear()
     {
-        Input.Clear();
+        //Input.Clear();
         Sound.Clear();
         Scene.Clear();
         UI.Clear();

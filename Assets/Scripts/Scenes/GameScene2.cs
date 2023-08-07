@@ -12,7 +12,8 @@ public class GameScene2: BaseScene
         base.Init();
         SceneType = Define.Scene.GameScene2;
         Managers.UI.ShowSceneUI<UI_GameScene>();
-//        Managers.Resource.Instantiate("Character").transform.position = characterSpawn;
+        Managers.Resource.Instantiate("Maps/stage2");
+        Managers.Resource.Instantiate("Character").transform.position = characterSpawn;
         // switch (DataManager.singleTon.saveData._currentStage)
         // {
         //     case 1:
@@ -25,7 +26,7 @@ public class GameScene2: BaseScene
         //         Managers.Resource.Instantiate("Maps/stage3");
         //         break;
         // }
- //       Managers.Resource.Instantiate("Enemy");
+        //       Managers.Resource.Instantiate("Enemy");
     }
 
     // Update is called once per frame

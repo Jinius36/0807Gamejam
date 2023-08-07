@@ -9,6 +9,7 @@ TagManager:
   - Item0
   - Item1
   - Clue
+  - Laser
   layers:
   - Default
   - TransparentFX

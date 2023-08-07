@@ -11,7 +11,8 @@ public class UI_GameScene : UI_Scene
     public enum Images
     {
         JoyStickBack,
-        JoyStick
+        JoyStick,
+        Panel
     }
     public enum Buttons
     {
@@ -21,6 +22,7 @@ public class UI_GameScene : UI_Scene
     RectTransform m_rectBack;
     RectTransform m_rectJoystick;
     Image joyStick;
+    public Image image;
     [SerializeField] GameObject character;
     [SerializeField] CharacterController characterController;
     float m_fRadius;
@@ -43,6 +45,7 @@ public class UI_GameScene : UI_Scene
         Bind<Button>(typeof(Buttons));
         m_rectBack = GetImage((int)Images.JoyStickBack).transform.GetComponent<RectTransform>();
         joyStick = GetImage((int)Images.JoyStick);
+        image = GetImage((int)Images.Panel);
         m_rectJoystick = joyStick.transform.GetComponent<RectTransform>();
         GetButton((int)Buttons.Run).gameObject.AddUIEvent(Run);
         GetButton((int)Buttons.Setting).gameObject.AddUIEvent(SettingClick);
@@ -53,6 +56,18 @@ public class UI_GameScene : UI_Scene
         joyStick.gameObject.AddUIEvent(OnPointerUP, Define.UIEvent.DragEnd);
         m_fRadius = m_rectBack.rect.width * 0.5f;
         canvas = this.GetComponent<Canvas>();
+        StartCoroutine(FadeCoroutine());
+    }
+    IEnumerator FadeCoroutine()
+    {
+        float fadeCount = 1.0f;
+        while (fadeCount > 0)
+        {
+            fadeCount -= 0.01f;
+            yield return new WaitForSeconds(0.01f);
+            image.color = new Color(0, 0, 0, fadeCount);
+        }
+        Managers.Resource.Destroy(image.gameObject);
     }
     void Run(PointerEventData eventData)
     {

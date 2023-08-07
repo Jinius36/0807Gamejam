@@ -7,11 +7,9 @@ using UnityEngine.UI;
 
 public class CharacterController : BaseController
 {
+    [SerializeField] UI_Die die;
     public enum Items
     {
-        Cctv1,
-        Cctv2,
-        Cctv3,
         Key1,
         Key2,
         Pen,
@@ -22,8 +20,6 @@ public class CharacterController : BaseController
         Paper1_2,
         Paper2_1,
         Paper2_2,
-        Sausage,
-        Milk
     }
     [SerializeField] public float speed;
     [SerializeField] UI_GameScene gameScene;
@@ -57,8 +53,22 @@ public class CharacterController : BaseController
     void Update()
     {
         if (life <= 0)
-        {
-            Debug.Log("Die");
+        {   
+            if(die == null)
+            {
+                switch (DataManager.singleTon.saveData._currentStage)
+                {
+                    case 1:
+                        Managers.Scene.LoadScene(Define.Scene.GameScene1);
+                        break;
+                    case 2:
+                        Managers.Scene.LoadScene(Define.Scene.GameScene2);
+                        break;
+                    case 3:
+                        Managers.Scene.LoadScene(Define.Scene.GameScene3);
+                        break;
+                }
+            }
         }
     }
     private void FixedUpdate()
@@ -116,29 +126,31 @@ public class CharacterController : BaseController
             if(DataManager.singleTon.saveData._currentStage == 1)
             {
                 if (DataManager.singleTon.item.itemData[0].isGet == true
-                    && DataManager.singleTon.item.itemData[1].isGet == true
-                    && DataManager.singleTon.item.itemData[2].isGet == true
-                    && DataManager.singleTon.item.itemData[3].isGet == true)
+                    && DataManager.singleTon.item.itemData[1].isGet == true)
                 {
-                    Managers.UI.ShowSceneUI<UI_Clear>();
+                    DataManager.singleTon.saveData._currentStage = 2;
+                    Managers.Scene.LoadScene(Define.Scene.GameScene2);
                 }
             }
             else if(DataManager.singleTon.saveData._currentStage == 2)
             {
-                if (DataManager.singleTon.item.itemData[4].isGet == true
-                    && DataManager.singleTon.item.itemData[5].isGet == true
-                    && DataManager.singleTon.item.itemData[6].isGet == true)
+                if (DataManager.singleTon.item.itemData[2].isGet == true
+                    && DataManager.singleTon.item.itemData[3].isGet == true
+                    && DataManager.singleTon.item.itemData[4].isGet == true)
                 {
-                    Managers.UI.ShowSceneUI<UI_Clear>();
+                    DataManager.singleTon.saveData._currentStage = 3;
+                    Managers.Scene.LoadScene(Define.Scene.GameScene3);
                 }
             }
             else if (DataManager.singleTon.saveData._currentStage == 3)
             {
-                if (DataManager.singleTon.item.itemData[7].isGet == true
+                if (DataManager.singleTon.item.itemData[5].isGet == true
+                    && DataManager.singleTon.item.itemData[6].isGet == true
+                    && DataManager.singleTon.item.itemData[7].isGet == true
                     && DataManager.singleTon.item.itemData[8].isGet == true
                     && DataManager.singleTon.item.itemData[9].isGet == true)
                 {
-                    Managers.UI.ShowSceneUI<UI_Clear>();
+                    Managers.Scene.LoadScene(Define.Scene.StartScene);
                 }
             }
         }
@@ -146,44 +158,54 @@ public class CharacterController : BaseController
         {
             switch(other.gameObject.name) 
             {
-                case "Cctv1":
-                    DataManager.singleTon.item.itemData[(int)Items.Cctv1].isGet = true;
-                    break;
-                case "Cctv2":
-                    DataManager.singleTon.item.itemData[(int)Items.Cctv2].isGet = true;
-                    break;
-                case "Cctv3":
-                    DataManager.singleTon.item.itemData[(int)Items.Cctv3].isGet = true;
-                    break;
                 case "Key1":
                     DataManager.singleTon.item.itemData[(int)Items.Key1].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
                 case "Key2":
                     DataManager.singleTon.item.itemData[(int)Items.Key2].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
                 case "Pen":
                     DataManager.singleTon.item.itemData[(int)Items.Pen].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
                 case "Picture1":
                     DataManager.singleTon.item.itemData[(int)Items.Picture1].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
                 case "Picture2":
                     DataManager.singleTon.item.itemData[(int)Items.Picture2].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
                     break;
                 case "USB":
                     DataManager.singleTon.item.itemData[(int)Items.USB].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
                 case "Paper1_1":
                     DataManager.singleTon.item.itemData[(int)Items.Paper1_1].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
                 case "Paper1_2":
                     DataManager.singleTon.item.itemData[(int)Items.Paper1_2].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
                 case "Paper2_1":
                     DataManager.singleTon.item.itemData[(int)Items.Paper2_1].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
                 case "Paper2_2":
                     DataManager.singleTon.item.itemData[(int)Items.Paper2_2].isGet = true;
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Time.timeScale = 0;
                     break;
             }
             Managers.Resource.Destroy(other.gameObject);

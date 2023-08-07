@@ -17,8 +17,6 @@ public class DataManager : MonoBehaviour
     public void Awake()
     {
         jsonManager = new JsonManager();
-        saveData = jsonManager.Load<SaveData>();
-        item = jsonManager.Load<Item>();
         if (singleTon == null)
         {
             singleTon = this;
@@ -28,6 +26,8 @@ public class DataManager : MonoBehaviour
         {
             Destroy(singleTon._gameObject);
         }
+        saveData = jsonManager.Load<SaveData>();
+        item = jsonManager.Load<Item>();
     }
 
     private void Start()
