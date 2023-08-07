@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CharacterController : BaseController
 {
     [SerializeField] float speed;
-    //[SerializeField] UI_GameScene gameScene;
+    [SerializeField] UI_GameScene gameScene;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,7 @@ public class CharacterController : BaseController
     public override void Init()
     {
         WorldObjectType = Define.WorldObject.Player;
-        //gameScene = GameObject.FindObjectOfType<UI_GameScene>();
+        gameScene = GameObject.FindObjectOfType<UI_GameScene>();
     }
     protected override void UpdateIdle()
     {
@@ -36,17 +37,17 @@ public class CharacterController : BaseController
     }
     private void FixedUpdate()
     {
-        //if(gameScene.Horizontal !=0||gameScene.Vertical !=0)
-        //{
-        //    MoveControl();
-        //}
+        if (gameScene.Horizontal != 0 || gameScene.Vertical != 0)
+        {
+            MoveControl();
+        }
     }
-    //private void MoveControl()
-    //{
-    //    Vector3 upMovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
-    //    Vector3 rightMovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
-    //    transform.position += upMovement;
-    //    transform.position += rightMovement;
-    //}
+    private void MoveControl()
+    {
+        Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
+        Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
+        transform.position += upmovement;
+        transform.position += rightmovement;
+    }
 
 }
