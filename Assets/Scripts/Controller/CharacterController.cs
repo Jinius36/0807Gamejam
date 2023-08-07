@@ -79,6 +79,10 @@ public class CharacterController : BaseController
         {
             MoveControl();
         }
+        else
+        {
+            rigidbody.velocity = Vector2.zero;
+        }
     }
     private void MoveControl()
     {
@@ -90,12 +94,10 @@ public class CharacterController : BaseController
         {
             transform.localEulerAngles = new Vector3(0, 0, 90);
         }
-        //Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
-        //Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
-        Vector2 vector = new Vector2(speed * gameScene.Vertical, speed * gameScene.Horizontal);
-        //transform.position += upmovement;
-        //transform.position += rightmovement;
-        rigidbody.velocity = vector;
+        Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
+        Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
+        transform.position += upmovement;
+        transform.position += rightmovement;
     }
     IEnumerator ReturnSpeed()
     {
