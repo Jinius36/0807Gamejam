@@ -4,29 +4,17 @@ using UnityEngine;
 
 public class GameScene3 : BaseScene
 {
-    [SerializeField] Vector3 characterSpawn = Vector3.zero;
+    [SerializeField] Vector3 characterSpawn;
     [SerializeField] List<Vector3> EnemySpawnList;   
     public override void Clear() { }
     protected override void Init()
     {
         base.Init();
         SceneType = Define.Scene.GameScene3;
+        characterSpawn = new Vector3(52.0f, 2.0f, 0.0f);    
         Managers.UI.ShowSceneUI<UI_GameScene>();
         Managers.Resource.Instantiate("Character").transform.position = characterSpawn;
         Managers.Resource.Instantiate("Maps/stage3");
-        //switch (DataManager.singleTon.saveData._currentStage)
-        //{
-        //    case 1:
-        //        Managers.Resource.Instantiate("Maps/stage1");
-        //        break;
-        //    case 2:
-        //        Managers.Resource.Instantiate("Maps/stage2");
-        //        break;
-        //    case 3:
-        //        Managers.Resource.Instantiate("Maps/stage3");
-        //        break;
-        //}
-        //Managers.Resource.Instantiate("Enemy");
     }
 
     // Update is called once per frame
