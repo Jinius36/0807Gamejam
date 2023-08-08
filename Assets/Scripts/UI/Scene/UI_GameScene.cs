@@ -69,9 +69,17 @@ public class UI_GameScene : UI_Scene
         }
         Managers.Resource.Destroy(image.gameObject);
     }
+    IEnumerator ReturnSpeed()
+    {
+        yield return new WaitForSeconds(3f);
+        characterController.anim.SetBool("isRun", false);
+        characterController.speed = 10;
+    }
     void Run(PointerEventData eventData)
     {
-        characterController.speed = 10;
+        characterController.speed = 20;
+        characterController.anim.SetBool("isRun", true);
+        StartCoroutine(ReturnSpeed());
     }
     void OnBeginDrag(PointerEventData eventData)
     {

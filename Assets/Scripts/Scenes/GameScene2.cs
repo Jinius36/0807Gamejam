@@ -10,24 +10,20 @@ public class GameScene2: BaseScene
     protected override void Init()
     {
         base.Init();
-        characterSpawn = new Vector3(52.0f, 2.0f, 0.0f);              
+        characterSpawn = new Vector3(52.0f, 2.0f, 0.0f);
+        EnemySpawnList.Add(new Vector3(32.1f,5.3f,0.0f));
+        EnemySpawnList.Add(new Vector3(32.1f,14.7f,0.0f));
+        EnemySpawnList.Add(new Vector3(-15.9f,14.7f,0.0f)); 
+        EnemySpawnList.Add(new Vector3(-40.7f,6.4f,0.0f));
+        EnemySpawnList.Add(new Vector3(-18.9f,-11.0f,0.0f));
+        EnemySpawnList.Add(new Vector3(-5.1f,9.9f,0.0f));
         SceneType = Define.Scene.GameScene2;
         Managers.UI.ShowSceneUI<UI_GameScene>();
         Managers.Resource.Instantiate("Maps/stage2");
         Managers.Resource.Instantiate("Character").transform.position = characterSpawn;
-        // switch (DataManager.singleTon.saveData._currentStage)
-        // {
-        //     case 1:
-        //         Managers.Resource.Instantiate("Maps/stage1");
-        //         break;
-        //     case 2:
-        //         Managers.Resource.Instantiate("Maps/stage2");
-        //         break;
-        //     case 3:
-        //         Managers.Resource.Instantiate("Maps/stage3");
-        //         break;
-        // }
-        //       Managers.Resource.Instantiate("Enemy");
+        for(int i=0; i<EnemySpawnList.Count;i++){
+            Managers.Resource.Instantiate("Enemy").transform.position = EnemySpawnList[i];
+        }
     }
 
     // Update is called once per frame

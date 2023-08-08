@@ -26,6 +26,7 @@ public class CharacterController : BaseController
     [SerializeField] float time = 3f;
     [SerializeField] int life = 3;
     [SerializeField] Rigidbody2D rigidbody;
+    [SerializeField] public Animator anim;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +38,7 @@ public class CharacterController : BaseController
         gameScene = GameObject.FindObjectOfType<UI_GameScene>();
         life = 3;
         rigidbody = GetComponent<Rigidbody2D>();
+        anim = this.gameObject.GetComponent<Animator>();
     }
     protected override void UpdateIdle()
     {
@@ -82,17 +84,19 @@ public class CharacterController : BaseController
         else
         {
             rigidbody.velocity = Vector2.zero;
+            anim.SetBool("isWalk", false);
         }
     }
     private void MoveControl()
     {
+        anim.SetBool("isWalk", true);
         if(gameScene.Horizontal > 0)
         {
-            transform.localEulerAngles = new Vector3(0, 0, -90);
+            transform.localEulerAngles = new Vector3(0, -180, 0);
         }
         else if(gameScene.Horizontal < 0)
         {
-            transform.localEulerAngles = new Vector3(0, 0, 90);
+            transform.localEulerAngles = new Vector3(0, 0, 0);
         }
         Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
         Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
@@ -102,19 +106,25 @@ public class CharacterController : BaseController
     IEnumerator ReturnSpeed()
     {
         yield return new WaitForSeconds(time);
-        speed = 5;
+        anim.SetBool("isRun", false);
+        speed = 10;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Item0")
         {
-            speed = 10;
+            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/SoddeokUI");
+            Time.timeScale = 0.0f;
+            speed = 20;
+            anim.SetBool("isRun", true);
             Managers.Resource.Destroy(other.gameObject);
             StartCoroutine(ReturnSpeed());
         }
         if(other.gameObject.tag == "Item1")
         {
-            speed = 2;
+            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Milk");
+            Time.timeScale = 0.0f;
+            speed = 5;
             Managers.Resource.Destroy(other.gameObject);
             StartCoroutine(ReturnSpeed());
         }
@@ -165,51 +175,51 @@ public class CharacterController : BaseController
             {
                 case "Key1":
                     DataManager.singleTon.item.itemData[(int)Items.Key1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key1");
                     Time.timeScale = 0;
                     break;
                 case "Key2":
                     DataManager.singleTon.item.itemData[(int)Items.Key2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key2");
                     Time.timeScale = 0;
                     break;
                 case "Pen":
                     DataManager.singleTon.item.itemData[(int)Items.Pen].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Pen");
                     Time.timeScale = 0;
                     break;
                 case "Picture1":
                     DataManager.singleTon.item.itemData[(int)Items.Picture1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture1");
                     Time.timeScale = 0;
                     break;
                 case "Picture2":
                     DataManager.singleTon.item.itemData[(int)Items.Picture2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture2");
                     break;
                 case "USB":
                     DataManager.singleTon.item.itemData[(int)Items.USB].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/USB");
                     Time.timeScale = 0;
                     break;
                 case "Paper1_1":
                     DataManager.singleTon.item.itemData[(int)Items.Paper1_1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_1");
                     Time.timeScale = 0;
                     break;
                 case "Paper1_2":
                     DataManager.singleTon.item.itemData[(int)Items.Paper1_2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_2");
                     Time.timeScale = 0;
                     break;
                 case "Paper2_1":
                     DataManager.singleTon.item.itemData[(int)Items.Paper2_1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_1");
                     Time.timeScale = 0;
                     break;
                 case "Paper2_2":
                     DataManager.singleTon.item.itemData[(int)Items.Paper2_2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>();
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_2");
                     Time.timeScale = 0;
                     break;
             }
