@@ -179,60 +179,60 @@ public class CharacterController : BaseController
                 case "Key1":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                     DataManager.singleTon.item.itemData[(int)Items.Key1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key1");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key1");
                     Time.timeScale = 0;
                     break;
                 case "Key2":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX); 
                     DataManager.singleTon.item.itemData[(int)Items.Key2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key2");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key2");
                     Time.timeScale = 0;
                     break;
                 case "Pen":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                     DataManager.singleTon.item.itemData[(int)Items.Pen].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Pen");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Pen");
                     Time.timeScale = 0;
                     break;
                 case "Picture1":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                     DataManager.singleTon.item.itemData[(int)Items.Picture1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture1");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture1");
                     Time.timeScale = 0;
                     break;
                 case "Picture2":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                     DataManager.singleTon.item.itemData[(int)Items.Picture2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture2");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture2");
                     break;
                 case "USB":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                     DataManager.singleTon.item.itemData[(int)Items.USB].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/USB");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/USB");
                     Time.timeScale = 0;
                     break;
                 case "Paper1_1":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                     DataManager.singleTon.item.itemData[(int)Items.Paper1_1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_1");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_1");
                     Time.timeScale = 0;
                     break;
                 case "Paper1_2":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                     DataManager.singleTon.item.itemData[(int)Items.Paper1_2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_2");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_2");
                     Time.timeScale = 0;
                     break;
                 case "Paper2_1":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);                
                     DataManager.singleTon.item.itemData[(int)Items.Paper2_1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_1");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_1");
                     Time.timeScale = 0;
                     break;
                 case "Paper2_2":
                     Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                     DataManager.singleTon.item.itemData[(int)Items.Paper2_2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_2");
+                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_2");
                     Time.timeScale = 0;
                     break;
             }
