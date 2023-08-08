@@ -238,6 +238,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveData:
     _currentStage: 1
+    _bgmVolume: 50
+    _sfxVolume: 50
   item:
     itemData: []
   _gameObject: {fileID: 174394480}
