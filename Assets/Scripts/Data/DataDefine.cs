@@ -9,9 +9,13 @@ public class DataDefine
     public class SaveData
     {
         public int _currentStage;
+        public float _bgmVolume;
+        public float _sfxVolume;
         public SaveData()
         {
             _currentStage = 1;
+            _bgmVolume = 50.0f;
+            _sfxVolume = 50.0f;
         }
     }
     [System.Serializable]

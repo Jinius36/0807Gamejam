@@ -90,7 +90,7 @@ public class CharacterController : BaseController
     private void MoveControl()
     {
         anim.SetBool("isWalk", true);
-        Managers.Sound.Play("Sounds/SFX/4_walking");
+        Managers.Sound.Play("Sounds/SFX/4_walking", Define.Sound.SFX);
         if(gameScene.Horizontal > 0)
         {
             transform.localEulerAngles = new Vector3(0, -180, 0);
