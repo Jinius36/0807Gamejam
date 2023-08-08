@@ -77,6 +77,7 @@ public class UI_GameScene : UI_Scene
     }
     void Run(PointerEventData eventData)
     {
+        Managers.Sound.Play("Sounds/SFX/2_dash");
         characterController.speed = 20;
         characterController.anim.SetBool("isRun", true);
         StartCoroutine(ReturnSpeed());
