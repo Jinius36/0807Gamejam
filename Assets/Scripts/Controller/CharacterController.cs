@@ -75,16 +75,39 @@ public class CharacterController : BaseController
             }
         }
     }
-    private void FixedUpdate()
+    //private void FixedUpdate()
+    //{
+    //    if (gameScene.Horizontal != 0 || gameScene.Vertical != 0)
+    //    {
+    //        MoveControl();
+    //    }
+    //    else
+    //    {
+    //        rigidbody.velocity = Vector2.zero;
+    //        anim.SetBool("isWalk", false);
+    //    }
+    //}
+    public void Move(Vector2 inputDirection)
     {
-        if (gameScene.Horizontal != 0 || gameScene.Vertical != 0)
+        Vector2 moveInput = inputDirection;
+        bool isMove = moveInput.magnitude != 0;
+        anim.SetBool("isWalk", isMove);
+        if (isMove)
         {
-            MoveControl();
+            Vector3 movDir = Vector3.up * moveInput.y + Vector3.right * moveInput.x ;
+            transform.position += movDir * Time.deltaTime * speed;
+        }
+    }
+    public void Look(Vector2 inputDirection)
+    {
+        Vector2 lookInput = inputDirection;
+        if(lookInput.x < 0)
+        {
+            transform.localEulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
-            rigidbody.velocity = Vector2.zero;
-            anim.SetBool("isWalk", false);
+            transform.localEulerAngles = new Vector3(0, -180, 0);
         }
     }
     private void MoveControl()

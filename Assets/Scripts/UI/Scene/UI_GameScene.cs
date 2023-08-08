@@ -19,8 +19,13 @@ public class UI_GameScene : UI_Scene
         Run,
         Setting
     }
-    RectTransform m_rectBack;
-    RectTransform m_rectJoystick;
+    RectTransform m_rectBack;// 조이스틱 배경
+    RectTransform m_rectJoystick;// 조이스틱 레버
+    [SerializeField, Range(10f, 150f)]
+    float joyStickRange;// 조이스틱이 배경 안 넘어가게 범위 조정
+    private Vector2 inputDirection;
+    private bool isInput;
+
     Image joyStick;
     public Image image;
     [SerializeField] GameObject character;
@@ -45,15 +50,15 @@ public class UI_GameScene : UI_Scene
         Bind<Button>(typeof(Buttons));
         m_rectBack = GetImage((int)Images.JoyStickBack).transform.GetComponent<RectTransform>();
         joyStick = GetImage((int)Images.JoyStick);
-        image = GetImage((int)Images.Panel);
         m_rectJoystick = joyStick.transform.GetComponent<RectTransform>();
+        image = GetImage((int)Images.Panel);
         GetButton((int)Buttons.Run).gameObject.AddUIEvent(Run);
         GetButton((int)Buttons.Setting).gameObject.AddUIEvent(SettingClick);
         character = FindObjectOfType<CharacterController>().gameObject;
         characterController = character.GetComponent<CharacterController>();
         joyStick.gameObject.AddUIEvent(OnBeginDrag, Define.UIEvent.BeginDrag);
         joyStick.gameObject.AddUIEvent(OnDrag, Define.UIEvent.Drag);
-        joyStick.gameObject.AddUIEvent(OnPointerUP, Define.UIEvent.DragEnd);
+        joyStick.gameObject.AddUIEvent(OnEndDrag, Define.UIEvent.DragEnd);
         m_fRadius = m_rectBack.rect.width * 0.5f;
         canvas = this.GetComponent<Canvas>();
         StartCoroutine(FadeCoroutine());
@@ -84,18 +89,42 @@ public class UI_GameScene : UI_Scene
     }
     void OnBeginDrag(PointerEventData eventData)
     {
-        input = (eventData.position - m_rectBack.anchoredPosition) / (m_fRadius * canvas.scaleFactor);
-        HandleInput(input.magnitude, input.normalized);
-        m_rectJoystick.anchoredPosition = input * m_fRadius * handlerRange;
+        ControlJoyStick(eventData);
+        isInput = true;
+        //input = (eventData.position - m_rectBack.anchoredPosition) / (m_fRadius * canvas.scaleFactor);
+        //HandleInput(input.magnitude, input.normalized);
+        //m_rectJoystick.anchoredPosition = input * m_fRadius * handlerRange;
         //character.transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(-input.normalized.x, input.normalized.y) * Mathf.Rad2Deg);
     }
     void OnDrag(PointerEventData eventData)
     {
-        input = (eventData.position - m_rectBack.anchoredPosition) / (m_fRadius * canvas.scaleFactor);
-        HandleInput(input.magnitude, input.normalized);
-        m_rectJoystick.anchoredPosition = input * m_fRadius * handlerRange;
+        ControlJoyStick(eventData);
+        isInput = true;
+        //input = (eventData.position - m_rectBack.anchoredPosition) / (m_fRadius * canvas.scaleFactor);
+        //HandleInput(input.magnitude, input.normalized);
+        //m_rectJoystick.anchoredPosition = input * m_fRadius * handlerRange;
         //character.transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(-input.normalized.x, input.normalized.y) * Mathf.Rad2Deg);
     }
+    void OnEndDrag(PointerEventData eventData)
+    {
+        m_rectJoystick.anchoredPosition = Vector2.zero;
+        isInput = false;
+        characterController.Move(Vector2.zero);
+    }
+    public void ControlJoyStick(PointerEventData eventData)
+    {
+        var inputPos = eventData.position - m_rectBack.anchoredPosition;
+        var inputVector = inputPos.magnitude < joyStickRange ? inputPos : inputPos.normalized * joyStickRange;
+        m_rectJoystick.anchoredPosition = inputVector;
+        inputDirection = inputVector / joyStickRange;
+        Debug.Log(inputDirection);
+    }
+    private void InputControlVector()
+    {
+        characterController.Move(inputDirection);
+        characterController.Look(inputDirection);
+    }
+    
     void HandleInput(float magnitude, Vector2 normalized)
     {
         if (magnitude > deadZone)
@@ -122,5 +151,9 @@ public class UI_GameScene : UI_Scene
     }
     void Update()
     {
+        if (isInput)
+        {
+            InputControlVector();
+        }
     }
 }
