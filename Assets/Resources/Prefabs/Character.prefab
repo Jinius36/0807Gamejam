@@ -102,12 +102,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lockTarget: {fileID: 0}
   _state: 0
-  die: {fileID: 0}
-  speed: 5
-  gameScene: {fileID: 0}
+  speed: 10
+  normalSpeed: 10
   time: 3
   life: 3
   rigidbody: {fileID: 0}
+  joystick: {fileID: 0}
+  moveVec: {x: 0, y: 0}
 --- !u!61 &1105527194314358901
 BoxCollider2D:
   m_ObjectHideFlags: 0

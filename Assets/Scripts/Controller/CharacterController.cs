@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class CharacterController : BaseController
 {
-    [SerializeField] UI_Die die;
     public enum Items
     {
         Key1,
@@ -22,14 +21,14 @@ public class CharacterController : BaseController
         Paper2_2,
     }
     [SerializeField] public float speed = 10;
-    [SerializeField] public float normalSpeed = 5;
-    //[SerializeField] UI_GameScene gameScene;
+    [SerializeField] public float normalSpeed = 10;
     [SerializeField] float time = 3f;
     [SerializeField] int life = 3;
     [SerializeField] new Rigidbody2D rigidbody;
-    [SerializeField] public Animator anim;
     [SerializeField] VariableJoystick joystick;
     [SerializeField] Vector2 moveVec;
+    float x;
+    float y;
 
     public Rigidbody2D Rigidbody { get => rigidbody; set => rigidbody = value; }
 
@@ -41,10 +40,8 @@ public class CharacterController : BaseController
     public override void Init()
     {
         WorldObjectType = Define.WorldObject.Player;
-        //gameScene = GameObject.FindObjectOfType<UI_GameScene>();
         life = 3;
         Rigidbody = GetComponent<Rigidbody2D>();
-        anim = this.gameObject.GetComponent<Animator>();
         joystick = FindAnyObjectByType<VariableJoystick>();
     }
     protected override void UpdateIdle()
@@ -58,42 +55,9 @@ public class CharacterController : BaseController
     protected override void UpdateWalk()
     {
         base.UpdateWalk();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (life <= 0)
-        {
-            if (die == null)
-            {
-                switch (DataManager.singleTon.saveData._currentStage)
-                {
-                    case 1:
-                        Managers.Scene.LoadScene(Define.Scene.GameScene1);
-                        break;
-                    case 2:
-                        Managers.Scene.LoadScene(Define.Scene.GameScene2);
-                        break;
-                    case 3:
-                        Managers.Scene.LoadScene(Define.Scene.GameScene3);
-                        break;
-                }
-            }
-        }
-    }
-    private void FixedUpdate()
-    {
-        // 1. Input Value
-        float x = joystick.Horizontal;
-        float Y = joystick.Vertical;
-
-        // 2. Move Position 
-        moveVec = new Vector2(x, Y) * speed * Time.fixedDeltaTime;
         Rigidbody.MovePosition(Rigidbody.position + moveVec);
 
-        if (moveVec.sqrMagnitude == 0)
-        return; // #. No input = No Rotation
+        // #. No input = No Rotation
         if (x < 0)
         {
             transform.localEulerAngles = new Vector3(0, 0, 0);
@@ -102,67 +66,80 @@ public class CharacterController : BaseController
         {
             transform.localEulerAngles = new Vector3(0, -180, 0);
         }
-        // 3. Move Rotation
-        //Quaternion dirQuat = Quaternion.LookRotation(moveVec);
-        //Quaternion moveQuat = Quaternion.Slerp(rigidbody.rotation, dirQuat, 0.3f);
-        //rigidbody.MoveRotation(moveQuat);
     }
-    //private void FixedUpdate()
-    //{
-    //    if (gameScene.Horizontal != 0 || gameScene.Vertical != 0)
-    //    {
-    //        MoveControl();
-    //    }
-    //    else
-    //    {
-    //        rigidbody.velocity = Vector2.zero;
-    //        anim.SetBool("isWalk", false);
-    //    }
-    //}
-    public void Move(Vector2 inputDirection)
+
+    // Update is called once per frame
+    void Update()
     {
-        Vector2 moveInput = inputDirection;
-        bool isMove = moveInput.magnitude != 0;
-        anim.SetBool("isWalk", isMove);
-        if (isMove)
+        x = joystick.Horizontal;
+        y = joystick.Vertical;
+        moveVec = new Vector2(x, y) * speed * Time.deltaTime;
+        if (moveVec.sqrMagnitude != 0)
         {
-            Vector3 movDir = Vector3.up * moveInput.y + Vector3.right * moveInput.x ;
-            transform.position += movDir * Time.deltaTime * speed;
+            State = Define.State.Walk;
+        }
+        if (moveVec.sqrMagnitude == 0)
+        {
+            State = Define.State.Idle;
+        }
+        switch (State)
+        {
+            case Define.State.Idle:
+                UpdateIdle();
+                break;
+            case Define.State.Walk:
+                UpdateWalk();
+                break;
+            case Define.State.Run:
+                UpdateRun();
+                break;
+        }
+        if (life <= 0)
+        {
+            switch (DataManager.singleTon.saveData._currentStage)
+            {
+                case 1:
+                    Managers.Scene.LoadScene(Define.Scene.GameScene1);
+                    break;
+                case 2:
+                    Managers.Scene.LoadScene(Define.Scene.GameScene2);
+                    break;
+                case 3:
+                    Managers.Scene.LoadScene(Define.Scene.GameScene3);
+                    break;
+            }
         }
     }
-    public void Look(Vector2 inputDirection)
+    private void FixedUpdate()
     {
-        Vector2 lookInput = inputDirection;
-        if(lookInput.x < 0)
-        {
-            transform.localEulerAngles = new Vector3(0, 0, 0);
-        }
-        else
-        {
-            transform.localEulerAngles = new Vector3(0, -180, 0);
-        }
+        //State = Define.State.Walk;
+        //// 1. Input Value
+        //float x = joystick.Horizontal;
+        //float y = joystick.Vertical;
+
+        //// 2. Move Position 
+        //moveVec = new Vector2(x, y) * speed * Time.fixedDeltaTime;
+        //Rigidbody.MovePosition(Rigidbody.position + moveVec);
+        //State = Define.State.Walk;
+        //if (moveVec.sqrMagnitude == 0)
+        //{
+        //    State = Define.State.Idle;
+        //    return;
+        //}
+        //// #. No input = No Rotation
+        //if (x < 0)
+        //{
+        //    transform.localEulerAngles = new Vector3(0, 0, 0);
+        //}
+        //else
+        //{
+        //    transform.localEulerAngles = new Vector3(0, -180, 0);
+        //}
     }
-    //private void MoveControl()
-    //{
-    //    anim.SetBool("isWalk", true);
-    //    Managers.Sound.Play("Sounds/SFX/4_walking", Define.Sound.SFX);
-    //    if(gameScene.Horizontal > 0)
-    //    {
-    //        transform.localEulerAngles = new Vector3(0, -180, 0);
-    //    }
-    //    else if(gameScene.Horizontal < 0)
-    //    {
-    //        transform.localEulerAngles = new Vector3(0, 0, 0);
-    //    }
-    //    Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
-    //    Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
-    //    transform.position += upmovement;
-    //    transform.position += rightmovement;
-    //}
     IEnumerator ReturnSpeed()
     {
         yield return new WaitForSeconds(time);
-        anim.SetBool("isRun", false);
+        State = Define.State.Walk;
         speed = normalSpeed;
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -173,7 +150,7 @@ public class CharacterController : BaseController
             Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/SoddeokUI");
             Time.timeScale = 0.0f;
             speed = speed * 2;
-            anim.SetBool("isRun", true);
+            State = Define.State.Run;
             Managers.Resource.Destroy(other.gameObject);
             StartCoroutine(ReturnSpeed());
         }

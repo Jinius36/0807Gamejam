@@ -27,32 +27,27 @@ public abstract class BaseController : MonoBehaviour
             switch (_state)
             {
                 case Define.State.Idle:
-                    anim.CrossFade("WAIT", 0.1f);
+                    anim.SetBool("isWalk", false);
+                    anim.SetBool("isRun", false);
                     break;
                 case Define.State.Walk:
-                    anim.CrossFade("WALK", 0.1f);
+                    anim.SetBool("isWalk", true);
+                    anim.SetBool("isRun", false);
                     break;
                 case Define.State.Run:
-                    anim.CrossFade("RUN", 0.1f, -1, 0);
+                    anim.SetBool("isRun", true);
+                    anim.SetBool("isWalk", true);
                     break;
             }
         }
     }
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        switch (_state)
-        {
-            case Define.State.Idle:
-                UpdateIdle();
-                break;
-            case Define.State.Walk:
-                UpdateWalk();
-                break;
-            case Define.State.Run:
-                UpdateRun();
-                break;
-        }
+    }
+    private void FixedUpdate()
+    {
+        
     }
     protected virtual void UpdateIdle()
     {

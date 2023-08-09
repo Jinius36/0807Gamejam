@@ -435,7 +435,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6709460e079991428d799b69caf57b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joyStickRange: 125
   image: {fileID: 0}
   character: {fileID: 0}
   characterController: {fileID: 0}
@@ -546,10 +545,34 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5003cc8de8a2d2c41951833405ddda77, type: 3}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 3881087804030458057, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 7a8e35793dd1a664d8f8980bb50be511, type: 3}
+    - target: {fileID: 3881087804030458062, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087804030458062, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 3881087804030458063, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_Name
       value: JoyStick
