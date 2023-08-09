@@ -30,9 +30,9 @@ public class UI_GameScene : UI_Scene
     public Image image;
     [SerializeField] GameObject character;
     [SerializeField] CharacterController characterController;
-    float m_fRadius;
-    float deadZone = 0f;
-    float handlerRange = 1;
+    //float m_fRadius;
+    //float deadZone = 0f;
+    //float handlerRange = 1;
     Vector3 input = Vector3.zero;
     Canvas canvas;
     public float Horizontal { get { return input.x; } }
@@ -59,7 +59,7 @@ public class UI_GameScene : UI_Scene
         joyStick.gameObject.AddUIEvent(OnBeginDrag, Define.UIEvent.BeginDrag);
         joyStick.gameObject.AddUIEvent(OnDrag, Define.UIEvent.Drag);
         joyStick.gameObject.AddUIEvent(OnEndDrag, Define.UIEvent.DragEnd);
-        m_fRadius = m_rectBack.rect.width * 0.5f;
+        //m_fRadius = m_rectBack.rect.width * 0.5f;
         canvas = this.GetComponent<Canvas>();
         StartCoroutine(FadeCoroutine());
     }
@@ -113,7 +113,8 @@ public class UI_GameScene : UI_Scene
     }
     public void ControlJoyStick(PointerEventData eventData)
     {
-        var inputPos = eventData.position - m_rectBack.anchoredPosition;
+        var scaledAnchoredPosition = m_rectBack.anchoredPosition * canvas.transform.localScale.x;
+        var inputPos = eventData.position - scaledAnchoredPosition;
         var inputVector = inputPos.magnitude < joyStickRange ? inputPos : inputPos.normalized * joyStickRange;
         m_rectJoystick.anchoredPosition = inputVector;
         inputDirection = inputVector / joyStickRange;
@@ -125,25 +126,25 @@ public class UI_GameScene : UI_Scene
         characterController.Look(inputDirection);
     }
     
-    void HandleInput(float magnitude, Vector2 normalized)
-    {
-        if (magnitude > deadZone)
-        {
-            if (magnitude > 1)
-            {
-                input = normalized;
-            }
-            else
-            {
-                input = Vector2.zero;
-            }
-        }
-    }
-    void OnPointerUP(PointerEventData eventData)
-    {
-        input = Vector2.zero;
-        m_rectJoystick.anchoredPosition = Vector2.zero;
-    }
+    //void HandleInput(float magnitude, Vector2 normalized)
+    //{
+    //    if (magnitude > deadZone)
+    //    {
+    //        if (magnitude > 1)
+    //        {
+    //            input = normalized;
+    //        }
+    //        else
+    //        {
+    //            input = Vector2.zero;
+    //        }
+    //    }
+    //}
+    //void OnPointerUP(PointerEventData eventData)
+    //{
+    //    input = Vector2.zero;
+    //    m_rectJoystick.anchoredPosition = Vector2.zero;
+    //}
     void SettingClick(PointerEventData eventData)
     {
         Managers.UI.ShowPopUpUI<UI_Setting_1>();
