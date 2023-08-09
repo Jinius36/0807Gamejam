@@ -29,7 +29,7 @@ public class GameScene1 : BaseScene
         {
             Managers.Resource.Instantiate("Enemy").transform.position = EnemySpawnList[i];
         }
-                Managers.Sound.Play("Sounds/BGM/BGM");
+        Managers.Sound.Play("Sounds/BGM/BGM", Define.Sound.BGM);
     }
     public void ReStart()
     {

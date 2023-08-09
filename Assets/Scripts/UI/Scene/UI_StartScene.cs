@@ -30,7 +30,7 @@ public class UI_StartScene : UI_Scene
     }
     public void SettingClick(PointerEventData data)
     {
-        Managers.UI.ShowPopUpUI<UI_Setting_1>();
+        Managers.UI.ShowPopUpUI<UI_MainSetting>();
     }
     void Update()
     {

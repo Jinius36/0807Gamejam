@@ -23,7 +23,7 @@ public class GameScene3 : BaseScene
         for(int i=0;i<EnemySpawnList.Count;i++){
             Managers.Resource.Instantiate("Enemy").transform.position = EnemySpawnList[i];
         }
-        Managers.Sound.Play("Sounds/BGM/BGM");
+        Managers.Sound.Play("Sounds/BGM/BGM", Define.Sound.BGM);
     }
 
     // Update is called once per frame

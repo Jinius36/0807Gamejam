@@ -1,23 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.Audio;
 
-public class UI_Setting_1 : UI_Popup
+public class UI_MainSetting : UI_Popup
 {
     public enum Buttons
     {
-        Main,
-        ReStart
+        Main
     }
     public enum GameObjects
     {
         BgmSlider,
         SfxSlider
     }
-    [SerializeField] AudioMixer audioMixer;
     private Slider _bgmSlider;
     private Slider _sfxSlider;
     // Start is called before the first frame update
@@ -31,22 +29,26 @@ public class UI_Setting_1 : UI_Popup
         Bind<Button>(typeof(Buttons));
         Bind<GameObject>(typeof(GameObjects));
         GetButton((int)Buttons.Main).gameObject.AddUIEvent(BackToMainClick);
-        GetButton((int)Buttons.ReStart).gameObject.AddUIEvent(RestartStageClick);
         _bgmSlider = Get<GameObject>((int)GameObjects.BgmSlider).GetComponent<Slider>();
         _sfxSlider = Get<GameObject>((int)GameObjects.SfxSlider).GetComponent<Slider>();
         _bgmSlider.value = DataManager.singleTon.saveData._bgmVolume;
         _sfxSlider.value = DataManager.singleTon.saveData._sfxVolume;
         _bgmSlider.gameObject.AddUIEvent(BGMVolume, Define.UIEvent.Drag);
         _sfxSlider.gameObject.AddUIEvent(SFXVolume, Define.UIEvent.Drag);
+        if (DataManager.singleTon.saveData._bgmVolume <= -40f)
+        {
+            Managers.Sound.audioMixer.SetFloat("BGM", -80);
+        }
+        Managers.Sound.audioMixer.SetFloat("BGM", Mathf.Log10(_bgmSlider.value) * 20);
+        if (DataManager.singleTon.saveData._bgmVolume <= -40f)
+        {
+            Managers.Sound.audioMixer.SetFloat("SFX", -80);
+        }
+        Managers.Sound.audioMixer.SetFloat("SFX", Mathf.Log10(_sfxSlider.value) * 20);
     }
     public void BackToMainClick(PointerEventData data)
     {
-        Managers.Scene.LoadScene(Define.Scene.StartScene);
-    }
-    public void RestartStageClick(PointerEventData data)
-    {
         ClosePopUPUI();
-        Time.timeScale = 1f;
     }
     public void CreditClick(PointerEventData data)
     {
@@ -74,6 +76,7 @@ public class UI_Setting_1 : UI_Popup
         }
         Managers.Sound.audioMixer.SetFloat("SFX", Mathf.Log10(_sfxSlider.value) * 20);
     }
+
     // Update is called once per frame
     void Update()
     {
