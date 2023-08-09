@@ -22,10 +22,11 @@ public class CharacterController : BaseController
         Paper2_2,
     }
     [SerializeField] public float speed = 10;
-    [SerializeField] UI_GameScene gameScene;
+    [SerializeField] public float normalSpeed = 5;
+    //[SerializeField] UI_GameScene gameScene;
     [SerializeField] float time = 3f;
     [SerializeField] int life = 3;
-    [SerializeField] Rigidbody2D rigidbody;
+    //[SerializeField] Rigidbody2D rigidbody;
     [SerializeField] public Animator anim;
     // Start is called before the first frame update
     void Start()
@@ -35,9 +36,9 @@ public class CharacterController : BaseController
     public override void Init()
     {
         WorldObjectType = Define.WorldObject.Player;
-        gameScene = GameObject.FindObjectOfType<UI_GameScene>();
+        //gameScene = GameObject.FindObjectOfType<UI_GameScene>();
         life = 3;
-        rigidbody = GetComponent<Rigidbody2D>();
+        //rigidbody = GetComponent<Rigidbody2D>();
         anim = this.gameObject.GetComponent<Animator>();
     }
     protected override void UpdateIdle()
@@ -131,7 +132,7 @@ public class CharacterController : BaseController
     {
         yield return new WaitForSeconds(time);
         anim.SetBool("isRun", false);
-        speed = 10;
+        speed = normalSpeed;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -140,7 +141,7 @@ public class CharacterController : BaseController
             Managers.Sound.Play("Sounds/SFX/5_yumyum", Define.Sound.SFX);
             Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/SoddeokUI");
             Time.timeScale = 0.0f;
-            speed = 20;
+            speed = speed * 2;
             anim.SetBool("isRun", true);
             Managers.Resource.Destroy(other.gameObject);
             StartCoroutine(ReturnSpeed());
@@ -150,7 +151,7 @@ public class CharacterController : BaseController
             Managers.Sound.Play("Sounds/SFX/3_drinkMilk", Define.Sound.SFX);
             Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Milk");
             Time.timeScale = 0.0f;
-            speed = 5;
+            speed = speed / 2;
             Managers.Resource.Destroy(other.gameObject);
             StartCoroutine(ReturnSpeed());
         }

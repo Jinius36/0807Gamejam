@@ -25,7 +25,7 @@ public class UI_GameScene : UI_Scene
     float joyStickRange;// 조이스틱이 배경 안 넘어가게 범위 조정
     private Vector2 inputDirection;
     private bool isInput;
-
+    private bool canRun;
     Image joyStick;
     public Image image;
     [SerializeField] GameObject character;
@@ -62,6 +62,7 @@ public class UI_GameScene : UI_Scene
         //m_fRadius = m_rectBack.rect.width * 0.5f;
         canvas = this.GetComponent<Canvas>();
         StartCoroutine(FadeCoroutine());
+        canRun = true;
     }
     IEnumerator FadeCoroutine()
     {
@@ -78,13 +79,20 @@ public class UI_GameScene : UI_Scene
     {
         yield return new WaitForSeconds(3f);
         characterController.anim.SetBool("isRun", false);
-        characterController.speed = 10;
+        characterController.speed = characterController.normalSpeed;
+        yield return new WaitForSeconds(10f);
+        canRun = true;
     }
     void Run(PointerEventData eventData)
     {
+        if (!canRun)
+        {
+            return;
+        }
         Managers.Sound.Play("Sounds/SFX/2_dash");
-        characterController.speed = 20;
+        characterController.speed *= 2;
         characterController.anim.SetBool("isRun", true);
+        canRun = false;
         StartCoroutine(ReturnSpeed());
     }
     void OnBeginDrag(PointerEventData eventData)
