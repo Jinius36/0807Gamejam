@@ -42,10 +42,22 @@ public class UI_Setting_1 : UI_Popup
     public void BackToMainClick(PointerEventData data)
     {
         Managers.Scene.LoadScene(Define.Scene.StartScene);
+        Time.timeScale = 1;
     }
     public void RestartStageClick(PointerEventData data)
     {
-        ClosePopUPUI();
+        switch (DataManager.singleTon.saveData._currentStage)
+        {
+            case 1:
+                Managers.Scene.LoadScene(Define.Scene.GameScene1);
+                break;
+            case 2:
+                Managers.Scene.LoadScene(Define.Scene.GameScene2);
+                break;
+            case 3:
+                Managers.Scene.LoadScene(Define.Scene.GameScene3);
+                break;
+        }
         Time.timeScale = 1f;
     }
     public void CreditClick(PointerEventData data)

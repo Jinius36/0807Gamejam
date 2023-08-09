@@ -110,23 +110,23 @@ public class CharacterController : BaseController
             transform.localEulerAngles = new Vector3(0, -180, 0);
         }
     }
-    private void MoveControl()
-    {
-        anim.SetBool("isWalk", true);
-        Managers.Sound.Play("Sounds/SFX/4_walking", Define.Sound.SFX);
-        if(gameScene.Horizontal > 0)
-        {
-            transform.localEulerAngles = new Vector3(0, -180, 0);
-        }
-        else if(gameScene.Horizontal < 0)
-        {
-            transform.localEulerAngles = new Vector3(0, 0, 0);
-        }
-        Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
-        Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
-        transform.position += upmovement;
-        transform.position += rightmovement;
-    }
+    //private void MoveControl()
+    //{
+    //    anim.SetBool("isWalk", true);
+    //    Managers.Sound.Play("Sounds/SFX/4_walking", Define.Sound.SFX);
+    //    if(gameScene.Horizontal > 0)
+    //    {
+    //        transform.localEulerAngles = new Vector3(0, -180, 0);
+    //    }
+    //    else if(gameScene.Horizontal < 0)
+    //    {
+    //        transform.localEulerAngles = new Vector3(0, 0, 0);
+    //    }
+    //    Vector3 upmovement = Vector3.up * speed * Time.deltaTime * gameScene.Vertical;
+    //    Vector3 rightmovement = Vector3.right * speed * Time.deltaTime * gameScene.Horizontal;
+    //    transform.position += upmovement;
+    //    transform.position += rightmovement;
+    //}
     IEnumerator ReturnSpeed()
     {
         yield return new WaitForSeconds(time);
