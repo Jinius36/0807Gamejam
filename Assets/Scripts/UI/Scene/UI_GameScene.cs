@@ -10,8 +10,8 @@ public class UI_GameScene : UI_Scene
 {
     public enum Images
     {
-        JoyStickBack,
-        JoyStick,
+        //JoyStickBack,
+        //JoyStick,
         Panel
     }
     public enum Buttons
@@ -48,8 +48,8 @@ public class UI_GameScene : UI_Scene
         base.Init();
         Bind<Image>(typeof(Images));
         Bind<Button>(typeof(Buttons));
-        m_rectBack = GetImage((int)Images.JoyStickBack).transform.GetComponent<RectTransform>();
-        joyStick = GetImage((int)Images.JoyStick);
+        //m_rectBack = GetImage((int)Images.JoyStickBack).transform.GetComponent<RectTransform>();
+        //joyStick = GetImage((int)Images.JoyStick);
         m_rectJoystick = joyStick.transform.GetComponent<RectTransform>();
         image = GetImage((int)Images.Panel);
         GetButton((int)Buttons.Run).gameObject.AddUIEvent(Run);
@@ -123,6 +123,7 @@ public class UI_GameScene : UI_Scene
     {
         var scaledAnchoredPosition = m_rectBack.anchoredPosition * canvas.transform.localScale.x;
         var inputPos = eventData.position - scaledAnchoredPosition;
+        //var inputPos = eventData.position - m_rectBack.anchoredPosition;
         var inputVector = inputPos.magnitude < joyStickRange ? inputPos : inputPos.normalized * joyStickRange;
         m_rectJoystick.anchoredPosition = inputVector;
         inputDirection = inputVector / joyStickRange;

@@ -26,8 +26,13 @@ public class CharacterController : BaseController
     //[SerializeField] UI_GameScene gameScene;
     [SerializeField] float time = 3f;
     [SerializeField] int life = 3;
-    //[SerializeField] Rigidbody2D rigidbody;
+    [SerializeField] new Rigidbody2D rigidbody;
     [SerializeField] public Animator anim;
+    [SerializeField] VariableJoystick joystick;
+    [SerializeField] Vector2 moveVec;
+
+    public Rigidbody2D Rigidbody { get => rigidbody; set => rigidbody = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,8 +43,9 @@ public class CharacterController : BaseController
         WorldObjectType = Define.WorldObject.Player;
         //gameScene = GameObject.FindObjectOfType<UI_GameScene>();
         life = 3;
-        //rigidbody = GetComponent<Rigidbody2D>();
+        Rigidbody = GetComponent<Rigidbody2D>();
         anim = this.gameObject.GetComponent<Animator>();
+        joystick = FindAnyObjectByType<VariableJoystick>();
     }
     protected override void UpdateIdle()
     {
@@ -58,8 +64,8 @@ public class CharacterController : BaseController
     void Update()
     {
         if (life <= 0)
-        {   
-            if(die == null)
+        {
+            if (die == null)
             {
                 switch (DataManager.singleTon.saveData._currentStage)
                 {
@@ -75,6 +81,31 @@ public class CharacterController : BaseController
                 }
             }
         }
+    }
+    private void FixedUpdate()
+    {
+        // 1. Input Value
+        float x = joystick.Horizontal;
+        float Y = joystick.Vertical;
+
+        // 2. Move Position 
+        moveVec = new Vector2(x, Y) * speed * Time.fixedDeltaTime;
+        Rigidbody.MovePosition(Rigidbody.position + moveVec);
+
+        if (moveVec.sqrMagnitude == 0)
+        return; // #. No input = No Rotation
+        if (x < 0)
+        {
+            transform.localEulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            transform.localEulerAngles = new Vector3(0, -180, 0);
+        }
+        // 3. Move Rotation
+        //Quaternion dirQuat = Quaternion.LookRotation(moveVec);
+        //Quaternion moveQuat = Quaternion.Slerp(rigidbody.rotation, dirQuat, 0.3f);
+        //rigidbody.MoveRotation(moveQuat);
     }
     //private void FixedUpdate()
     //{
