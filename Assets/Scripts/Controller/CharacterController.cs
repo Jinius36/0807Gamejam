@@ -119,18 +119,7 @@ public class CharacterController : BaseController
         }
         if (life <= 0)
         {
-            switch (DataManager.singleTon.saveData._currentStage)
-            {
-                case 1:
-                    Managers.Scene.LoadScene(Define.Scene.GameScene1);
-                    break;
-                case 2:
-                    Managers.Scene.LoadScene(Define.Scene.GameScene2);
-                    break;
-                case 3:
-                    Managers.Scene.LoadScene(Define.Scene.GameScene3);
-                    break;
-            }
+            StartCoroutine(Die());
             for(int i=0; i< DataManager.singleTon.item.itemData.Count; i++)
             {
                 DataManager.singleTon.item.itemData[i].isGet = false;
@@ -145,6 +134,27 @@ public class CharacterController : BaseController
         yield return new WaitForSeconds(time);
         State = Define.State.Walk;
         speed = normalSpeed;
+    }
+    IEnumerator Die()
+    {
+        switch (DataManager.singleTon.saveData._currentStage)
+        {
+            case 1:
+                Managers.UI.ShowSceneUI<UI_Die>();
+                yield return new WaitForSeconds(time);
+                Managers.Scene.LoadScene(Define.Scene.GameScene1);
+                break;
+            case 2:
+                Managers.UI.ShowSceneUI<UI_Die>();
+                yield return new WaitForSeconds(time);
+                Managers.Scene.LoadScene(Define.Scene.GameScene2);
+                break;
+            case 3:
+                Managers.UI.ShowSceneUI<UI_Die>();
+                yield return new WaitForSeconds(time);
+                Managers.Scene.LoadScene(Define.Scene.GameScene3);
+                break;
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
