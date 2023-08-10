@@ -20,8 +20,8 @@ public class CharacterController : BaseController
         Paper2_1,
         Paper2_2,
     }
-    [SerializeField] public float speed = 10;
-    [SerializeField] public float normalSpeed = 10;
+    [SerializeField] public float speed = 5;
+    [SerializeField] public float normalSpeed = 5;
     [SerializeField] float time = 3f;
     [SerializeField] int life = 3;
     [SerializeField] new Rigidbody2D rigidbody;
@@ -169,6 +169,7 @@ public class CharacterController : BaseController
                 break;
             case "Laser":
                 life--;
+                Managers.Sound.Play("Sounds/SFX/8_warning");
                 break;
             case "Light":
                 life = 0;
@@ -236,6 +237,7 @@ public class CharacterController : BaseController
                         Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
                         DataManager.singleTon.item.itemData[(int)Items.Picture2].isGet = true;
                         Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture2");
+                        Time.timeScale = 0;
                         break;
                     case "USB":
                         Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);

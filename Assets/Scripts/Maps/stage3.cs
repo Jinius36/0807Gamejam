@@ -17,7 +17,7 @@ public class stage3 : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        switch ((int)time % 2)
+        switch ((int)time % 4)
         {
             case 0:
                 for(int i = 0; i < LaserList.Length; i++)
@@ -26,6 +26,12 @@ public class stage3 : MonoBehaviour
                 }
                 break;
             case 1:
+                for (int i = 0; i < LaserList.Length; i++)
+                {
+                    LaserList[i].SetActive(true);
+                }
+                break;
+            default:
                 for (int i = 0; i < LaserList.Length; i++)
                 {
                     LaserList[i].SetActive(false);
