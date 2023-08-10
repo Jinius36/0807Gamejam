@@ -17,7 +17,6 @@ public class UI_GameScene : UI_Scene
         Run,
         Setting
     }
-    private bool canRun;
     public Image image;
     [SerializeField] GameObject character;
     [SerializeField] CharacterController characterController;
@@ -36,12 +35,12 @@ public class UI_GameScene : UI_Scene
         Bind<Image>(typeof(Images));
         Bind<Button>(typeof(Buttons));
         image = GetImage((int)Images.Panel);
-        GetButton((int)Buttons.Run).gameObject.AddUIEvent(Run);
+        GetButton((int)Buttons.Run).gameObject.AddUIEvent(Run, Define.UIEvent.PointerDown);
+        GetButton((int)Buttons.Run).gameObject.AddUIEvent(ReturnToWalk, Define.UIEvent.PointerUP);
         GetButton((int)Buttons.Setting).gameObject.AddUIEvent(SettingClick);
         character = FindObjectOfType<CharacterController>().gameObject;
         characterController = character.GetComponent<CharacterController>();
         StartCoroutine(FadeCoroutine());
-        canRun = true;
     }
     IEnumerator FadeCoroutine()
     {
@@ -54,24 +53,16 @@ public class UI_GameScene : UI_Scene
         }
         Managers.Resource.Destroy(image.gameObject);
     }
-    IEnumerator ReturnSpeed()
-    {
-        yield return new WaitForSeconds(5f);
-        characterController.State = Define.State.Walk;
-        characterController.speed = characterController.normalSpeed;
-        yield return new WaitForSeconds(10f);
-        canRun = true;
-    }
+
     void Run(PointerEventData eventData)
     {
-        if (!canRun)
-        {
-            return;
-        }
-        characterController.speed *= 2;
+        characterController.speed = characterController.runSpeed;
         characterController.State = Define.State.Run;
-        canRun = false;
-        StartCoroutine(ReturnSpeed());
+    }
+    void ReturnToWalk(PointerEventData eventData)
+    {
+        characterController.speed = characterController.normalSpeed;
+        characterController.State = Define.State.Walk;
     }
     void SettingClick(PointerEventData eventData)
     {
@@ -80,5 +71,15 @@ public class UI_GameScene : UI_Scene
     }
     void Update()
     {
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+        {
+            characterController.speed = characterController.runSpeed;
+            characterController.State = Define.State.Run;
+        }
+        else if (UnityEngine.Input.GetKeyUp(KeyCode.Space))
+        {
+            characterController.speed = characterController.normalSpeed;
+            characterController.State = Define.State.Walk;
+        }
     }
 }

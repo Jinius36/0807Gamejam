@@ -35,16 +35,17 @@ public class UI_MainSetting : UI_Popup
         _sfxSlider.value = DataManager.singleTon.saveData._sfxVolume;
         _bgmSlider.gameObject.AddUIEvent(BGMVolume, Define.UIEvent.Drag);
         _sfxSlider.gameObject.AddUIEvent(SFXVolume, Define.UIEvent.Drag);
-        if (DataManager.singleTon.saveData._bgmVolume <= -40f)
+        if (_bgmSlider.value <= -40f)
         {
             Managers.Sound.audioMixer.SetFloat("BGM", -80);
         }
         Managers.Sound.audioMixer.SetFloat("BGM", Mathf.Log10(_bgmSlider.value) * 20);
-        if (DataManager.singleTon.saveData._bgmVolume <= -40f)
+        if (_sfxSlider.value <= -40f)
         {
             Managers.Sound.audioMixer.SetFloat("SFX", -80);
         }
         Managers.Sound.audioMixer.SetFloat("SFX", Mathf.Log10(_sfxSlider.value) * 20);
+        Managers.Sound._audioSources[(int)Define.Sound.SFX].volume = _sfxSlider.value;
     }
     public void BackToMainClick(PointerEventData data)
     {
@@ -75,6 +76,7 @@ public class UI_MainSetting : UI_Popup
             Managers.Sound.audioMixer.SetFloat("SFX", -80);
         }
         Managers.Sound.audioMixer.SetFloat("SFX", Mathf.Log10(_sfxSlider.value) * 20);
+        Managers.Sound._audioSources[(int)Define.Sound.SFX].volume = _sfxSlider.value;
     }
 
     // Update is called once per frame

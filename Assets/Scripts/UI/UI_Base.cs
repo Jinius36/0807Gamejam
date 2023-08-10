@@ -70,9 +70,13 @@ public abstract class UI_Base : MonoBehaviour
                 _event.DragEndHandler -= action;
                 _event.DragEndHandler += action;
                 break;
-            case Define.UIEvent.Slider:
-                _event.SliderHandler -= action;
-                _event.SliderHandler += action;
+            case Define.UIEvent.PointerUP:
+                _event.OnPointerUpHandler -= action;
+                _event.OnPointerUpHandler += action;
+                break;
+            case Define.UIEvent.PointerDown:
+                _event.OnPointerDownHandler -= action;
+                _event.OnPointerDownHandler += action;
                 break;
         }
 

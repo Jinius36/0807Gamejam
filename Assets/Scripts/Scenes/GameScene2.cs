@@ -11,12 +11,6 @@ public class GameScene2: BaseScene
     {
         base.Init();
         characterSpawn = new Vector3(52.0f, 2.0f, 0.0f);
-        EnemySpawnList.Add(new Vector3(32.1f,5.3f,0.0f));
-        EnemySpawnList.Add(new Vector3(32.1f,14.7f,0.0f));
-        EnemySpawnList.Add(new Vector3(-15.9f,14.7f,0.0f)); 
-        EnemySpawnList.Add(new Vector3(-40.7f,6.4f,0.0f));
-        EnemySpawnList.Add(new Vector3(-18.9f,-11.0f,0.0f));
-        EnemySpawnList.Add(new Vector3(-5.1f,9.9f,0.0f));
         SceneType = Define.Scene.GameScene2;
         Managers.UI.ShowSceneUI<UI_GameScene>();
         Managers.Resource.Instantiate("Maps/stage2");

@@ -104,7 +104,6 @@ public class UI_Setting_1 : UI_Popup
         if (Application.platform == RuntimePlatform.Android)
         {
             if (Input.GetKey(KeyCode.Escape))
-
             {
                 Return();
             }

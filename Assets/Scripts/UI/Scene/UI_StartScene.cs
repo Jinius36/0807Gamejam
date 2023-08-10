@@ -34,7 +34,7 @@ public class UI_StartScene : UI_Scene
     }
     void Update()
     {
-        if (Application.platform == RuntimePlatform.Android)
+        if (Application.platform == RuntimePlatform.Android && Managers.UI.Root.transform.childCount == 1)
         {
             if (Input.GetKey(KeyCode.Escape))
 

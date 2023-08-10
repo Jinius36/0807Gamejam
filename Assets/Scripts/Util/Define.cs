@@ -22,7 +22,8 @@ public class Define
         BeginDrag,
         Drag,
         DragEnd,
-        Slider
+        PointerDown,
+        PointerUP
     }
     public enum MouseEvent
     {
