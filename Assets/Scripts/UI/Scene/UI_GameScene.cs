@@ -68,7 +68,6 @@ public class UI_GameScene : UI_Scene
         {
             return;
         }
-        Managers.Sound.Play("Sounds/SFX/2_dash");
         characterController.speed *= 2;
         characterController.State = Define.State.Run;
         canRun = false;

@@ -67,7 +67,16 @@ public class CharacterController : BaseController
             transform.localEulerAngles = new Vector3(0, -180, 0);
         }
     }
-
+    public void WalkSound()
+    {
+        Debug.Log("Walk");
+        Managers.Sound.Play("Sounds/SFX/4_walking", Define.Sound.SFX);
+    }
+    public void RunSound()
+    {
+        Debug.Log("Run");
+        Managers.Sound.Play("Sounds/SFX/2_dash", Define.Sound.SFX);
+    }
     // Update is called once per frame
     void Update()
     {

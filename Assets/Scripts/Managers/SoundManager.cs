@@ -46,6 +46,7 @@ public class SoundManager
             }
             audioSource.pitch = pitch;
             audioSource.clip = audioClip;
+            audioSource.loop = true;
             audioSource.Play();
         }
         else
