@@ -10,7 +10,8 @@ public class UI_Setting_1 : UI_Popup
     public enum Buttons
     {
         Main,
-        ReStart
+        ReStart,
+        Back
     }
     public enum GameObjects
     {
@@ -32,12 +33,23 @@ public class UI_Setting_1 : UI_Popup
         Bind<GameObject>(typeof(GameObjects));
         GetButton((int)Buttons.Main).gameObject.AddUIEvent(BackToMainClick);
         GetButton((int)Buttons.ReStart).gameObject.AddUIEvent(RestartStageClick);
+        GetButton((int)Buttons.Back).gameObject.AddUIEvent(Return);
         _bgmSlider = Get<GameObject>((int)GameObjects.BgmSlider).GetComponent<Slider>();
         _sfxSlider = Get<GameObject>((int)GameObjects.SfxSlider).GetComponent<Slider>();
         _bgmSlider.value = DataManager.singleTon.saveData._bgmVolume;
         _sfxSlider.value = DataManager.singleTon.saveData._sfxVolume;
         _bgmSlider.gameObject.AddUIEvent(BGMVolume, Define.UIEvent.Drag);
         _sfxSlider.gameObject.AddUIEvent(SFXVolume, Define.UIEvent.Drag);
+    }
+    public void Return(PointerEventData data)
+    {
+        ClosePopUPUI();
+        Time.timeScale = 1;
+    }
+    public void Return()
+    {
+        ClosePopUPUI();
+        Time.timeScale = 1;
     }
     public void BackToMainClick(PointerEventData data)
     {
@@ -89,6 +101,13 @@ public class UI_Setting_1 : UI_Popup
     // Update is called once per frame
     void Update()
     {
-        
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+
+            {
+                Return();
+            }
+        }
     }
 }

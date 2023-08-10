@@ -80,6 +80,12 @@ public class UI_MainSetting : UI_Popup
     // Update is called once per frame
     void Update()
     {
-        
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                ClosePopUPUI();
+            }
+        }
     }
 }
