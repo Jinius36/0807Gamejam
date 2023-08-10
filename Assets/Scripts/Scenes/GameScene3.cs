@@ -20,9 +20,6 @@ public class GameScene3 : BaseScene
         Managers.UI.ShowSceneUI<UI_GameScene>();
         Managers.Resource.Instantiate("Character").transform.position = characterSpawn;
         Managers.Resource.Instantiate("Maps/stage3");
-        for(int i=0;i<EnemySpawnList.Count;i++){
-            Managers.Resource.Instantiate("Enemy").transform.position = EnemySpawnList[i];
-        }
         Managers.Sound.Play("Sounds/BGM/BGM", Define.Sound.BGM);
     }
 

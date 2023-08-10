@@ -27,6 +27,7 @@ public class CharacterController : BaseController
     [SerializeField] new Rigidbody2D rigidbody;
     [SerializeField] VariableJoystick joystick;
     [SerializeField] Vector2 moveVec;
+    [SerializeField] Stage1 stage1;
     float x;
     float y;
 
@@ -43,6 +44,7 @@ public class CharacterController : BaseController
         life = 3;
         Rigidbody = GetComponent<Rigidbody2D>();
         joystick = FindAnyObjectByType<VariableJoystick>();
+        stage1 = FindObjectOfType<Stage1>();
     }
     protected override void UpdateIdle()
     {
@@ -153,131 +155,260 @@ public class CharacterController : BaseController
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Item0")
+        switch (other.gameObject.tag)
         {
-            Managers.Sound.Play("Sounds/SFX/5_yumyum", Define.Sound.SFX);
-            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/SoddeokUI");
-            Time.timeScale = 0.0f;
-            speed = speed * 2;
-            State = Define.State.Run;
-            Managers.Resource.Destroy(other.gameObject);
-            StartCoroutine(ReturnSpeed());
-        }
-        if(other.gameObject.tag == "Item1")
-        {
-            Managers.Sound.Play("Sounds/SFX/3_drinkMilk", Define.Sound.SFX);
-            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Milk");
-            Time.timeScale = 0.0f;
-            speed = speed / 2;
-            Managers.Resource.Destroy(other.gameObject);
-            StartCoroutine(ReturnSpeed());
-        }
-        if(other.gameObject.tag == "Laser")
-        {
-            life--;
-        }
-        if(other.gameObject.tag == "Light")
-        {
-            life = 0;
-        }
-        if(other.gameObject.tag == "Stairs")
-        {
-            if(DataManager.singleTon.saveData._currentStage == 1)
-            {
-                if (DataManager.singleTon.item.itemData[0].isGet == true
-                    && DataManager.singleTon.item.itemData[1].isGet == true)
+            case "PC":
+                for(int i = 0; i < stage1.PC.Length; i++)
                 {
-                    DataManager.singleTon.saveData._currentStage = 2;
-                    Managers.Scene.LoadScene(Define.Scene.GameScene2);
+                    stage1.PC[i].GetComponent<SpriteRenderer>().sprite = Managers.Resource.Load<Sprite>("ItemIcon/PC_On");
                 }
-            }
-            else if(DataManager.singleTon.saveData._currentStage == 2)
-            {
-                if (DataManager.singleTon.item.itemData[2].isGet == true
-                    && DataManager.singleTon.item.itemData[3].isGet == true
-                    && DataManager.singleTon.item.itemData[4].isGet == true)
+                break;
+            case "Item0":
+                Managers.Sound.Play("Sounds/SFX/5_yumyum", Define.Sound.SFX);
+                Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/SoddeokUI");
+                Time.timeScale = 0.0f;
+                speed = speed * 2;
+                State = Define.State.Run;
+                Managers.Resource.Destroy(other.gameObject);
+                StartCoroutine(ReturnSpeed());
+                break;
+            case "Item1":
+                Managers.Sound.Play("Sounds/SFX/3_drinkMilk", Define.Sound.SFX);
+                Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Milk");
+                Time.timeScale = 0.0f;
+                speed = speed / 2;
+                Managers.Resource.Destroy(other.gameObject);
+                StartCoroutine(ReturnSpeed());
+                break;
+            case "Laser":
+                life--;
+                break;
+            case "Light":
+                life = 0;
+                break;
+            case "Stairs":
+                if (DataManager.singleTon.saveData._currentStage == 1)
                 {
-                    DataManager.singleTon.saveData._currentStage = 3;
-                    Managers.Scene.LoadScene(Define.Scene.GameScene3);
+                    if (DataManager.singleTon.item.itemData[0].isGet == true
+                        && DataManager.singleTon.item.itemData[1].isGet == true)
+                    {
+                        DataManager.singleTon.saveData._currentStage = 2;
+                        Managers.Scene.LoadScene(Define.Scene.GameScene2);
+                    }
                 }
-            }
-            else if (DataManager.singleTon.saveData._currentStage == 3)
-            {
-                if (DataManager.singleTon.item.itemData[5].isGet == true
-                    && DataManager.singleTon.item.itemData[6].isGet == true
-                    && DataManager.singleTon.item.itemData[7].isGet == true
-                    && DataManager.singleTon.item.itemData[8].isGet == true
-                    && DataManager.singleTon.item.itemData[9].isGet == true)
+                else if (DataManager.singleTon.saveData._currentStage == 2)
                 {
-                    Managers.Scene.LoadScene(Define.Scene.StartScene);
+                    if (DataManager.singleTon.item.itemData[2].isGet == true
+                        && DataManager.singleTon.item.itemData[3].isGet == true
+                        && DataManager.singleTon.item.itemData[4].isGet == true)
+                    {
+                        DataManager.singleTon.saveData._currentStage = 3;
+                        Managers.Scene.LoadScene(Define.Scene.GameScene3);
+                    }
                 }
-            }
+                else if (DataManager.singleTon.saveData._currentStage == 3)
+                {
+                    if (DataManager.singleTon.item.itemData[5].isGet == true
+                        && DataManager.singleTon.item.itemData[6].isGet == true
+                        && DataManager.singleTon.item.itemData[7].isGet == true
+                        && DataManager.singleTon.item.itemData[8].isGet == true
+                        && DataManager.singleTon.item.itemData[9].isGet == true)
+                    {
+                        Managers.Scene.LoadScene(Define.Scene.StartScene);
+                    }
+                }
+                break;
+            case "Clue":
+                switch (other.gameObject.name)
+                {
+                    case "Key1":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Key1].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key1");
+                        Time.timeScale = 0;
+                        break;
+                    case "Key2":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Key2].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key2");
+                        Time.timeScale = 0;
+                        break;
+                    case "Pen":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Pen].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Pen");
+                        Time.timeScale = 0;
+                        break;
+                    case "Picture1":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Picture1].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture1");
+                        Time.timeScale = 0;
+                        break;
+                    case "Picture2":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Picture2].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture2");
+                        break;
+                    case "USB":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.USB].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/USB");
+                        Time.timeScale = 0;
+                        break;
+                    case "Paper1_1":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Paper1_1].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_1");
+                        Time.timeScale = 0;
+                        break;
+                    case "Paper1_2":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Paper1_2].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_2");
+                        Time.timeScale = 0;
+                        break;
+                    case "Paper2_1":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Paper2_1].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_1");
+                        Time.timeScale = 0;
+                        break;
+                    case "Paper2_2":
+                        Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+                        DataManager.singleTon.item.itemData[(int)Items.Paper2_2].isGet = true;
+                        Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_2");
+                        Time.timeScale = 0;
+                        break;
+                }
+                Managers.Resource.Destroy(other.gameObject);
+                break;
         }
-        if(other.gameObject.tag == "Clue")
-        {
-            switch(other.gameObject.name) 
-            {
-                case "Key1":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
-                    DataManager.singleTon.item.itemData[(int)Items.Key1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key1");
-                    Time.timeScale = 0;
-                    break;
-                case "Key2":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX); 
-                    DataManager.singleTon.item.itemData[(int)Items.Key2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key2");
-                    Time.timeScale = 0;
-                    break;
-                case "Pen":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
-                    DataManager.singleTon.item.itemData[(int)Items.Pen].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Pen");
-                    Time.timeScale = 0;
-                    break;
-                case "Picture1":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
-                    DataManager.singleTon.item.itemData[(int)Items.Picture1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture1");
-                    Time.timeScale = 0;
-                    break;
-                case "Picture2":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
-                    DataManager.singleTon.item.itemData[(int)Items.Picture2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture2");
-                    break;
-                case "USB":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
-                    DataManager.singleTon.item.itemData[(int)Items.USB].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/USB");
-                    Time.timeScale = 0;
-                    break;
-                case "Paper1_1":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
-                    DataManager.singleTon.item.itemData[(int)Items.Paper1_1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_1");
-                    Time.timeScale = 0;
-                    break;
-                case "Paper1_2":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
-                    DataManager.singleTon.item.itemData[(int)Items.Paper1_2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_2");
-                    Time.timeScale = 0;
-                    break;
-                case "Paper2_1":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);                
-                    DataManager.singleTon.item.itemData[(int)Items.Paper2_1].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_1");
-                    Time.timeScale = 0;
-                    break;
-                case "Paper2_2":
-                    Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
-                    DataManager.singleTon.item.itemData[(int)Items.Paper2_2].isGet = true;
-                    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_2");
-                    Time.timeScale = 0;
-                    break;
-            }
-            Managers.Resource.Destroy(other.gameObject);
-        }
+        //if(other.gameObject.tag == "Item0")
+        //{
+        //    Managers.Sound.Play("Sounds/SFX/5_yumyum", Define.Sound.SFX);
+        //    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/SoddeokUI");
+        //    Time.timeScale = 0.0f;
+        //    speed = speed * 2;
+        //    State = Define.State.Run;
+        //    Managers.Resource.Destroy(other.gameObject);
+        //    StartCoroutine(ReturnSpeed());
+        //}
+        //if(other.gameObject.tag == "Item1")
+        //{
+        //    Managers.Sound.Play("Sounds/SFX/3_drinkMilk", Define.Sound.SFX);
+        //    Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Milk");
+        //    Time.timeScale = 0.0f;
+        //    speed = speed / 2;
+        //    Managers.Resource.Destroy(other.gameObject);
+        //    StartCoroutine(ReturnSpeed());
+        //}
+        //if(other.gameObject.tag == "Laser")
+        //{
+        //    life--;
+        //}
+        //if(other.gameObject.tag == "Light")
+        //{
+        //    life = 0;
+        //}
+        //if(other.gameObject.tag == "Stairs")
+        //{
+        //    if(DataManager.singleTon.saveData._currentStage == 1)
+        //    {
+        //        if (DataManager.singleTon.item.itemData[0].isGet == true
+        //            && DataManager.singleTon.item.itemData[1].isGet == true)
+        //        {
+        //            DataManager.singleTon.saveData._currentStage = 2;
+        //            Managers.Scene.LoadScene(Define.Scene.GameScene2);
+        //        }
+        //    }
+        //    else if(DataManager.singleTon.saveData._currentStage == 2)
+        //    {
+        //        if (DataManager.singleTon.item.itemData[2].isGet == true
+        //            && DataManager.singleTon.item.itemData[3].isGet == true
+        //            && DataManager.singleTon.item.itemData[4].isGet == true)
+        //        {
+        //            DataManager.singleTon.saveData._currentStage = 3;
+        //            Managers.Scene.LoadScene(Define.Scene.GameScene3);
+        //        }
+        //    }
+        //    else if (DataManager.singleTon.saveData._currentStage == 3)
+        //    {
+        //        if (DataManager.singleTon.item.itemData[5].isGet == true
+        //            && DataManager.singleTon.item.itemData[6].isGet == true
+        //            && DataManager.singleTon.item.itemData[7].isGet == true
+        //            && DataManager.singleTon.item.itemData[8].isGet == true
+        //            && DataManager.singleTon.item.itemData[9].isGet == true)
+        //        {
+        //            Managers.Scene.LoadScene(Define.Scene.StartScene);
+        //        }
+        //    }
+        //}
+        //if(other.gameObject.tag == "Clue")
+        //{
+        //    switch(other.gameObject.name) 
+        //    {
+        //        case "Key1":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+        //            DataManager.singleTon.item.itemData[(int)Items.Key1].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key1");
+        //            Time.timeScale = 0;
+        //            break;
+        //        case "Key2":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX); 
+        //            DataManager.singleTon.item.itemData[(int)Items.Key2].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Key2");
+        //            Time.timeScale = 0;
+        //            break;
+        //        case "Pen":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+        //            DataManager.singleTon.item.itemData[(int)Items.Pen].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Pen");
+        //            Time.timeScale = 0;
+        //            break;
+        //        case "Picture1":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+        //            DataManager.singleTon.item.itemData[(int)Items.Picture1].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture1");
+        //            Time.timeScale = 0;
+        //            break;
+        //        case "Picture2":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+        //            DataManager.singleTon.item.itemData[(int)Items.Picture2].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Picture2");
+        //            break;
+        //        case "USB":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+        //            DataManager.singleTon.item.itemData[(int)Items.USB].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/USB");
+        //            Time.timeScale = 0;
+        //            break;
+        //        case "Paper1_1":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+        //            DataManager.singleTon.item.itemData[(int)Items.Paper1_1].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_1");
+        //            Time.timeScale = 0;
+        //            break;
+        //        case "Paper1_2":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+        //            DataManager.singleTon.item.itemData[(int)Items.Paper1_2].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper1_2");
+        //            Time.timeScale = 0;
+        //            break;
+        //        case "Paper2_1":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);                
+        //            DataManager.singleTon.item.itemData[(int)Items.Paper2_1].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_1");
+        //            Time.timeScale = 0;
+        //            break;
+        //        case "Paper2_2":
+        //            Managers.Sound.Play("Sounds/SFX/6_gain", Define.Sound.SFX);
+        //            DataManager.singleTon.item.itemData[(int)Items.Paper2_2].isGet = true;
+        //            Managers.UI.ShowPopUpUI<UI_ItemGet>().transform.GetChild(1).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Paper2_2");
+        //            Time.timeScale = 0;
+        //            break;
+        //    }
+        //    Managers.Resource.Destroy(other.gameObject);
+        //}
     }
 }

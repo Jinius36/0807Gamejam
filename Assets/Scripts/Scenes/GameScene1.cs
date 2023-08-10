@@ -24,11 +24,11 @@ public class GameScene1 : BaseScene
         Managers.Resource.Instantiate("Maps/stage1");
         Player = Managers.Resource.Instantiate("Character");
         Player.transform.position = characterSpawn;
-        Managers.Resource.Instantiate("Enemy");
-        for(int i=0; i<EnemySpawnList.Count;i++)
-        {
-            Managers.Resource.Instantiate("Enemy").transform.position = EnemySpawnList[i];
-        }
+        //Managers.Resource.Instantiate("Enemy");
+        //for(int i=0; i<EnemySpawnList.Count;i++)
+        //{
+        //    Managers.Resource.Instantiate("Enemy").transform.position = EnemySpawnList[i];
+        //}
         Managers.Sound.Play("Sounds/BGM/BGM", Define.Sound.BGM);
     }
     public void ReStart()
