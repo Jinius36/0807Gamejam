@@ -53,6 +53,15 @@ public class CharacterController : BaseController
     protected override void UpdateRun()
     {
         base.UpdateRun();
+        Rigidbody.MovePosition(Rigidbody.position + moveVec);
+        if (x < 0)
+        {
+            transform.localEulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            transform.localEulerAngles = new Vector3(0, -180, 0);
+        }
     }
     protected override void UpdateWalk()
     {
@@ -71,12 +80,10 @@ public class CharacterController : BaseController
     }
     public void WalkSound()
     {
-        Debug.Log("Walk");
         Managers.Sound.Play("Sounds/SFX/4_walking", Define.Sound.SFX);
     }
     public void RunSound()
     {
-        Debug.Log("Run");
         Managers.Sound.Play("Sounds/SFX/2_dash", Define.Sound.SFX);
     }
     // Update is called once per frame
@@ -87,7 +94,10 @@ public class CharacterController : BaseController
         moveVec = new Vector2(x, y) * speed * Time.deltaTime;
         if (moveVec.sqrMagnitude != 0)
         {
-            State = Define.State.Walk;
+            if(State != Define.State.Run)
+            {
+                State = Define.State.Walk;
+            }
         }
         if (moveVec.sqrMagnitude == 0)
         {

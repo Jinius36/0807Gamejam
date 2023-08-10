@@ -102,8 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lockTarget: {fileID: 0}
   _state: 0
-  speed: 15
-  normalSpeed: 15
+  speed: 10
+  normalSpeed: 10
   time: 3
   life: 3
   rigidbody: {fileID: 0}

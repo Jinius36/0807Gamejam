@@ -36,7 +36,6 @@ public abstract class BaseController : MonoBehaviour
                     break;
                 case Define.State.Run:
                     anim.SetBool("isRun", true);
-                    anim.SetBool("isWalk", true);
                     break;
             }
         }
