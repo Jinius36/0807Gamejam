@@ -16,11 +16,11 @@ public class EnemyController : BaseController
     }
     Vector3 prePosition;
     Rotations rotations;
-    Transform light;
+    Transform lighter;
     void Start()
     {
         Init();
-        light = transform.GetChild(0);
+        lighter = transform.GetChild(0);
         prePosition = transform.position;
         rotations = Rotations.Left;
     }
@@ -44,13 +44,13 @@ public class EnemyController : BaseController
     public void moveRight()
     {
         transform.localEulerAngles = new Vector3(0, -180, 0);
-        light.SetLocalPositionAndRotation(new Vector3(-1.85f, -0.62f, 0), Quaternion.Euler(new Vector3(0, 0, -90)));
+        lighter.SetLocalPositionAndRotation(new Vector3(-1.85f, -0.62f, 0), Quaternion.Euler(new Vector3(0, 0, -90)));
         transform.position += Vector3.right * Time.deltaTime;
     }
     public void moveLeft()
     {
         transform.localEulerAngles = new Vector3(0, 0, 0);
-        light.SetLocalPositionAndRotation(new Vector3(-1.85f, -0.62f ,0), Quaternion.Euler(new Vector3(0, 0, -90)));
+        lighter.SetLocalPositionAndRotation(new Vector3(-1.85f, -0.62f ,0), Quaternion.Euler(new Vector3(0, 0, -90)));
         transform.position += Vector3.left * Time.deltaTime;
     }
     // public void moveUp()

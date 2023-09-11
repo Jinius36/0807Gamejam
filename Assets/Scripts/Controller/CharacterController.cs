@@ -218,7 +218,7 @@ public class CharacterController : BaseController
                         && DataManager.singleTon.item.itemData[(int)Items.Paper2_1].isGet
                         && DataManager.singleTon.item.itemData[(int)Items.Paper2_2].isGet)
                     {
-                        Managers.Scene.LoadScene(Define.Scene.StartScene);
+                        Managers.UI.ShowPopUpUI<UI_Ending>();
                     }
                 }
                 break;
