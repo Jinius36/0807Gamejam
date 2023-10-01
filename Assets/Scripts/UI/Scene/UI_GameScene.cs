@@ -44,7 +44,7 @@ public class UI_GameScene : UI_Scene
     }
     IEnumerator FadeCoroutine()
     {
-        float fadeCount = 1.0f;
+        float fadeCount = 0.8f;
         while (fadeCount > 0)
         {
             fadeCount -= 0.01f;
